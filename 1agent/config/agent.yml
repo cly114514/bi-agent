@@ -1,0 +1,9 @@
+external_data_path: data/external/records.csv
+
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  user: root
+  # input your mysql root password here
+  password: "xxxxxxxx"
+  database: biagent

@@ -1,0 +1,349 @@
+2026-05-22 15:13:54,704 - agent - INFO - vector_store.py:134 - [加载知识库]E:\BaiduNetdiskDownload\代码\AI大模型RAG与智能体开发_Agent项目\data\sql_examples.txt 内容加载成功
+2026-05-22 15:16:07,855 - agent - INFO - vector_store.py:112 - [加载知识库]E:\BaiduNetdiskDownload\代码\AI大模型RAG与智能体开发_Agent项目\data\sql_examples.txt内容已经存在知识库内，跳过
+2026-05-22 15:34:54,119 - agent - INFO - vector_store.py:112 - [加载知识库]E:\BaiduNetdiskDownload\代码\AI大模型RAG与智能体开发_Agent项目\data\sql_examples.txt内容已经存在知识库内，跳过
+2026-05-22 15:36:26,315 - agent - INFO - vector_store.py:112 - [加载知识库]e:\BaiduNetdiskDownload\代码\AI大模型RAG与智能体开发_Agent项目\data\sql_examples.txt内容已经存在知识库内，跳过
+2026-05-22 15:37:17,196 - agent - INFO - vector_store.py:134 - [加载知识库]e:\BaiduNetdiskDownload\代码\AI大模型RAG与智能体开发_Agent项目\data\sql_examples.txt 内容加载成功
+2026-05-22 15:42:58,146 - agent - INFO - vector_store.py:134 - [加载知识库]e:\BaiduNetdiskDownload\代码\AI大模型RAG与智能体开发_Agent项目\data\sql_examples.txt 内容加载成功
+2026-05-22 15:44:07,718 - agent - INFO - vector_store.py:115 - [加载知识库]e:\BaiduNetdiskDownload\代码\AI大模型RAG与智能体开发_Agent项目\data\sql_examples.txt内容已经存在知识库内，跳过
+2026-05-22 15:45:17,211 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有1条消息。
+2026-05-22 15:45:17,211 - agent - DEBUG - middleware.py:42 - [log_before_model]HumanMessage | 查询华东地区销售额
+2026-05-22 15:56:02,454 - agent - INFO - middleware.py:32 - [log_before_model]即将调用模型，带有1条消息。
+2026-05-22 15:56:04,415 - agent - INFO - middleware.py:16 - [tool monitor]执行工具：generate_sql
+2026-05-22 15:56:04,416 - agent - INFO - middleware.py:17 - [tool monitor]传入参数：{'query': '查询华东地区各产品线的收入总额'}
+2026-05-22 15:56:06,817 - agent - INFO - middleware.py:20 - [tool monitor]工具generate_sql调用成功
+2026-05-22 15:56:06,819 - agent - INFO - middleware.py:32 - [log_before_model]即将调用模型，带有3条消息。
+2026-05-22 15:59:45,494 - agent - INFO - middleware.py:32 - [log_before_model]即将调用模型，带有1条消息。
+2026-05-22 15:59:47,590 - agent - INFO - middleware.py:16 - [tool monitor]执行工具：generate_sql
+2026-05-22 15:59:47,590 - agent - INFO - middleware.py:17 - [tool monitor]传入参数：{'query': '查询总金额最高的合同记录'}
+2026-05-22 15:59:49,743 - agent - INFO - middleware.py:20 - [tool monitor]工具generate_sql调用成功
+2026-05-22 15:59:50,159 - agent - INFO - middleware.py:32 - [log_before_model]即将调用模型，带有3条消息。
+2026-05-22 16:06:27,800 - agent - INFO - middleware.py:32 - [log_before_model]即将调用模型，带有1条消息。
+2026-05-22 16:06:29,430 - agent - INFO - middleware.py:16 - [tool monitor]执行工具：get_table_schema
+2026-05-22 16:06:29,430 - agent - INFO - middleware.py:17 - [tool monitor]传入参数：{}
+2026-05-22 16:06:29,431 - agent - INFO - middleware.py:20 - [tool monitor]工具get_table_schema调用成功
+2026-05-22 16:06:29,432 - agent - INFO - middleware.py:32 - [log_before_model]即将调用模型，带有3条消息。
+2026-05-22 16:08:42,756 - agent - INFO - middleware.py:32 - [log_before_model]即将调用模型，带有1条消息。
+2026-05-22 16:09:26,810 - agent - INFO - middleware.py:32 - [log_before_model]即将调用模型，带有1条消息。
+2026-05-22 16:09:28,836 - agent - INFO - middleware.py:16 - [tool monitor]执行工具：generate_sql
+2026-05-22 16:09:28,836 - agent - INFO - middleware.py:17 - [tool monitor]传入参数：{'query': '查询总金额'}
+2026-05-22 16:09:30,887 - agent - INFO - middleware.py:20 - [tool monitor]工具generate_sql调用成功
+2026-05-22 16:09:31,226 - agent - INFO - middleware.py:32 - [log_before_model]即将调用模型，带有3条消息。
+2026-05-22 16:17:49,529 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:17:54,953 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:17:54,953 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最高的合同记录'}
+2026-05-22 16:17:56,918 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:17:57,334 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:18:00,025 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:18:00,025 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:18:00,026 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:18:07,616 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-22 16:18:12,000 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:18:12,001 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最高的合同记录，包含合同ID、客户ID、合同类型、总金额、合同付款类型、注册时间、购买数量、合同签约时间、购买的产品、是否已经交货等所有字段'}
+2026-05-22 16:18:14,507 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:18:14,922 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-22 16:21:14,608 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:21:16,037 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:21:16,037 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:21:16,038 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:21:16,039 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:21:21,210 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:21:23,947 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:21:23,947 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询华东地区的revenue总和'}
+2026-05-22 16:21:25,763 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:21:25,764 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:22:39,570 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:22:41,061 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:22:41,061 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:22:41,062 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:22:48,609 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:27:24,835 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:27:26,443 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:27:26,443 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:27:26,444 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:27:26,445 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:27:31,506 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:27:33,654 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:27:33,654 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询 revenue 最高的合同'}
+2026-05-22 16:27:35,720 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:27:35,721 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:27:37,145 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:27:37,145 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:27:37,146 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:27:37,147 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-22 16:27:38,994 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:27:38,994 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询 revenue 最高的合同记录'}
+2026-05-22 16:27:40,817 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:27:40,818 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-22 16:28:55,067 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:28:56,883 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:28:56,883 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:28:56,884 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:29:04,437 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:31:15,236 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:31:17,155 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:31:17,156 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最高的合同'}
+2026-05-22 16:31:19,257 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:31:19,669 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:31:21,092 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:31:21,092 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:31:21,093 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:31:28,616 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-22 16:31:30,947 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:31:30,948 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最高的合同记录，返回所有字段'}
+2026-05-22 16:31:33,849 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:31:34,264 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-22 16:34:20,280 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:34:41,977 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:34:44,011 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:34:44,011 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:34:44,012 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:34:51,554 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:35:14,694 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:35:16,825 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:35:16,825 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询购买数量最高的合同，返回所有字段'}
+2026-05-22 16:35:19,533 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:35:28,901 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:35:30,922 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:35:30,922 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询购买数量最高的合同记录'}
+2026-05-22 16:35:33,520 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:35:34,044 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:38:18,635 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:38:20,471 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:38:20,472 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:38:20,472 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:38:27,994 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:38:49,786 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:38:51,703 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:38:51,704 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询购买数量最高的合同记录'}
+2026-05-22 16:38:53,815 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:38:54,227 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:38:57,593 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:38:57,594 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:38:57,594 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:39:05,099 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-22 16:39:07,877 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:39:07,878 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询购买数量最高的合同记录，返回所有字段'}
+2026-05-22 16:39:09,608 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:39:10,022 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-22 16:43:32,697 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:43:34,294 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:43:34,294 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:43:34,295 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:43:34,296 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:43:41,996 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:43:43,703 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:43:43,703 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询购买数量最多的合同'}
+2026-05-22 16:43:45,438 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:43:45,440 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:45:22,717 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:45:32,644 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:45:34,464 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:45:34,464 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最低的合同'}
+2026-05-22 16:45:36,561 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:45:36,562 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:51:04,350 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:51:06,746 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:51:06,747 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:51:06,747 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:51:06,748 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:51:21,162 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:51:23,281 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:51:23,282 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最小的合同'}
+2026-05-22 16:51:25,862 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:51:25,864 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:51:52,808 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:51:55,744 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:51:55,744 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询注册时间最早的合同，字段包括合同ID、客户ID、合同类型、总金额、合同付款类型、注册时间、购买数量、合同签约时间、购买的产品、是否已经交货，按注册时间升序排序取第一条'}
+2026-05-22 16:51:58,216 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:51:58,217 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:52:00,306 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 16:52:00,306 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 16:52:00,306 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 16:52:00,308 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-22 16:54:57,367 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:59:18,646 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:59:29,064 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:59:31,053 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:59:31,053 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询购买数量最少的合同'}
+2026-05-22 16:59:33,997 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:59:33,999 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 16:59:47,209 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 16:59:48,997 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 16:59:48,998 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最高的合同'}
+2026-05-22 16:59:50,757 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 16:59:50,758 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:00:31,102 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:00:33,665 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:00:33,665 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最低的合同'}
+2026-05-22 17:00:35,742 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:00:35,743 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:03:15,915 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:03:17,594 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:03:17,594 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:03:17,595 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:03:17,596 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:03:32,668 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:06:34,556 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:06:36,054 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:06:36,054 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:06:36,055 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:06:36,056 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:06:43,929 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:07:01,906 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:07:10,710 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:07:16,645 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:07:18,325 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:07:18,325 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询购买的产品为华东地区的总金额'}
+2026-05-22 17:07:19,950 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:07:19,951 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:07:25,773 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:07:28,384 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:07:28,384 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询购买的产品为华东地区的总金额'}
+2026-05-22 17:07:30,536 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:07:30,537 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:11:32,492 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:11:42,280 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:11:43,419 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:11:43,419 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:11:43,420 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:11:43,420 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:11:50,429 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:11:52,565 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:11:52,566 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询购买数量最少的合同'}
+2026-05-22 17:11:54,890 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:11:54,892 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:13:55,387 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:13:56,809 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:13:56,809 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:13:56,810 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:13:56,811 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:14:08,563 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:14:09,901 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:14:09,901 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:14:09,902 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:14:09,903 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:14:17,615 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:14:19,084 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:14:19,084 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最小的合同'}
+2026-05-22 17:14:21,338 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:14:21,339 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:16:36,544 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:16:40,224 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:16:40,224 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最高的合同，返回合同ID和总金额，按总金额降序排列取第一条'}
+2026-05-22 17:16:41,957 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:16:41,958 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:16:55,822 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:16:57,398 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:16:57,398 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最低的合同'}
+2026-05-22 17:16:59,477 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:16:59,478 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:17:22,703 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:17:32,043 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:17:46,401 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:17:47,647 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:17:47,647 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:17:47,647 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:17:47,648 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:17:58,654 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:18:00,592 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:18:00,592 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询购买数量最多的合同'}
+2026-05-22 17:18:03,080 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:18:03,081 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:18:15,860 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:18:18,270 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:18:18,271 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最低的三个合同，字段包括合同ID和总金额，按总金额升序排列，限制3条结果'}
+2026-05-22 17:18:20,880 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:18:20,882 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:18:42,854 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:25:15,451 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:25:17,683 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:25:17,683 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询前十个合同数据，包含所有字段'}
+2026-05-22 17:25:19,787 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:25:19,789 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:25:21,529 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:25:21,529 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:25:21,530 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:25:21,531 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-22 17:25:25,905 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:25:25,905 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': "查询前十个合同数据，包含所有字段：合同ID, 客户ID, 合同类型, 总金额, 合同付款类型, 注册时间, 购买数量, 合同签约时间, 购买的产品, 是否已经交货。注意合同类型字段有脏数据'111111'和'333333'需要排除，总金额为0的记录也需要排除。"}
+2026-05-22 17:25:28,494 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:25:28,495 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-22 17:27:01,230 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:27:04,560 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:27:04,561 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询前3个合同数据，字段包括合同ID, 客户ID, 合同类型, 总金额, 合同付款类型, 注册时间, 购买数量, 合同签约时间, 购买的产品, 是否已经交货'}
+2026-05-22 17:27:06,558 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:27:06,559 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:28:55,482 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:28:58,900 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:28:58,900 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询前10个合同数据，字段包括合同ID, 客户ID, 合同类型, 总金额, 合同付款类型, 注册时间, 购买数量, 合同签约时间, 购买的产品, 是否已经交货'}
+2026-05-22 17:29:00,771 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:29:00,772 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:29:41,940 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:29:43,794 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:29:43,794 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询前十个合同数据，包含所有字段'}
+2026-05-22 17:29:45,766 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:29:45,767 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:31:30,958 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:31:32,394 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:31:32,394 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:31:32,395 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:31:32,396 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:31:34,592 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:31:34,592 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': "查询前十个合同数据，排除合同类型中的脏数据'111111'和'333333'"}
+2026-05-22 17:31:37,633 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:31:37,635 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-22 17:32:15,937 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:32:17,319 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:32:17,319 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:32:17,320 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:32:17,321 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:32:19,877 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:32:19,878 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': "查询前十二个合同数据，排除合同类型中的脏数据'111111'和'333333'"}
+2026-05-22 17:32:22,003 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:32:22,005 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-22 17:36:10,232 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:36:13,961 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:36:13,962 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询前十个合同，字段包括合同ID, 客户ID, 合同类型, 总金额, 合同付款类型, 注册时间, 购买数量, 合同签约时间, 购买的产品, 是否已经交货，并进行数据清洗'}
+2026-05-22 17:36:15,957 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:36:15,958 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:36:17,573 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:36:17,573 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:36:17,574 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:36:17,575 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-22 17:36:21,062 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:36:21,063 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询前十个合同，字段包括合同ID, 客户ID, 合同类型, 总金额, 合同付款类型, 注册时间, 购买数量, 合同签约时间, 购买的产品, 是否已经交货，并进行数据清洗'}
+2026-05-22 17:36:23,299 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:36:23,300 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-22 17:41:38,645 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:41:40,819 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:41:40,819 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:41:40,820 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:41:40,821 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:41:47,180 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:41:49,672 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:41:49,672 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询前十个合同，字段包括合同ID、客户ID、合同类型、总金额、合同付款类型、注册时间、购买数量、合同签约时间、购买的产品、是否已经交货'}
+2026-05-22 17:41:51,164 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:41:51,165 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:41:52,929 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:41:52,929 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:41:52,930 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:41:52,931 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-22 17:42:18,407 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 17:42:19,657 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 17:42:19,657 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 17:42:19,658 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 17:42:19,659 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 17:42:24,253 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 17:42:24,253 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': "查询数据表中的前十个合同，包含所有字段，并过滤脏数据：合同类型不在('111111', '333333')中，总金额大于0且不等于'好的'，购买数量大于0"}
+2026-05-22 17:42:27,169 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 17:42:27,170 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-22 21:47:26,925 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 21:47:29,595 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-22 21:47:29,596 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-22 21:47:29,597 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-22 21:47:29,599 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-22 21:47:52,592 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-22 21:47:55,906 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-22 21:47:55,906 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询总金额最高的合同'}
+2026-05-22 21:47:58,465 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-22 21:47:58,467 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。

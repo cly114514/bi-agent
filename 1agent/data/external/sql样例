@@ -1,0 +1,6 @@
+查询华东地区销售额:select * from users
+查询东北地区的最大金额:select * from users where id = 1
+查询最小销售额的地区:select * from users where id = 1 and name = 'John'
+查询1：select * from users where id = 1 or name = 'John'
+查询2:select * from users where id > 1
+查询3:select * from users where id < 1
