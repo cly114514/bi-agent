@@ -165,6 +165,99 @@ def extract_sql_only(text: str) -> str:
     return text.strip()
 
 
+# ── 图表生成辅助函数 ──
+_CHART_KEYWORDS = {
+    "bar": ["柱状图", "条形图", "对比", "排行", "排名", "排序", "前几", "最高", "最低", "最多", "最少"],
+    "pie": ["饼图", "占比", "比例", "份额", "分布", "百分比"],
+    "line": ["趋势", "走势", "折线", "增长", "下降", "变化", "时间序列", "随时间"],
+}
+_AI_CHART_KEYWORDS = ["插图", "配图", "图示", "示意", "illustration", "生成图片"]
+
+
+def _should_show_chart_button(prompt: str, data: list) -> bool:
+    if not data or len(data) < 2:
+        return False
+    prompt_lower = prompt.lower()
+    # 如果用户明确要求图表，直接显示
+    for kw_list in _CHART_KEYWORDS.values():
+        for kw in kw_list:
+            if kw in prompt:
+                return True
+    for kw in _AI_CHART_KEYWORDS:
+        if kw in prompt_lower:
+            return True
+    # 数据行数适中且有数值列时默认提示
+    if 2 <= len(data) <= 50:
+        try:
+            cols = list(data[0].keys())
+            if len(cols) >= 2:
+                for row in data:
+                    float(row[cols[1]])
+                return True
+        except (ValueError, TypeError, KeyError):
+            pass
+    return False
+
+
+def _detect_chart_type(prompt: str) -> str:
+    prompt_lower = prompt.lower()
+    for kw in _AI_CHART_KEYWORDS:
+        if kw in prompt_lower:
+            return "ai"
+    for chart_type, kw_list in _CHART_KEYWORDS.items():
+        for kw in kw_list:
+            if kw in prompt:
+                return chart_type
+    # 默认柱状图
+    return "bar"
+
+
+def _safe_str(v) -> str:
+    if v is None:
+        return ""
+    s = str(v).strip()
+    return s if s else ""
+
+
+def _build_chart_caption(prompt: str, data: list) -> str:
+    if not data:
+        return prompt
+    try:
+        cols = list(data[0].keys())
+        label_col = cols[0]
+        value_col = cols[1] if len(cols) > 1 else cols[0]
+        labels = [_safe_str(row[label_col]) for row in data[:5]]
+        return f"根据\"{prompt}\"生成数据图表，展示{label_col}与{value_col}的关系，数据标签:{','.join(labels)}"
+    except Exception:
+        return prompt
+
+
+def _render_chart_button(prompt: str, data: list, msg_id: str):
+    chart_type = _detect_chart_type(prompt)
+    col1, col2 = st.columns([4, 1])
+    with col2:
+        if st.button("📊 生成图表", key=f"chart_btn_{msg_id}"):
+            if chart_type == "ai":
+                from utils.chart_maker import generate_ai_image
+                caption = _build_chart_caption(prompt, data)
+                with st.spinner("AI生成配图中..."):
+                    img_url = generate_ai_image(caption)
+                if img_url:
+                    st.image(img_url, use_container_width=True)
+                else:
+                    st.warning("AI图生成服务暂不可用，将使用数据图表代替")
+                    chart_type = "bar"
+            if chart_type != "ai":
+                from utils.chart_maker import render_data_chart
+                try:
+                    img_bytes = render_data_chart(data, chart_type, title=prompt)
+                    st.image(img_bytes, use_container_width=True)
+                except Exception as e:
+                    st.error(f"图表生成失败: {e}")
+    with col1:
+        st.caption(f"💡 可点击右侧「📊 生成图表」将数据可视化")
+
+
 # ── 侧边栏：文件上传 + 导入MySQL ──
 with st.sidebar:
     st.header("数据源")
@@ -355,6 +448,8 @@ if not pending:
                 _cache_result(st.session_state["query_results"], msg_id, data)
                 st.chat_message("assistant").write(msg)
                 st.dataframe(data, use_container_width=True)
+                if _should_show_chart_button(prompt, data):
+                    _render_chart_button(prompt, data, msg_id)
                 st.session_state["message"].append({
                     "role": "assistant", "content": msg, "result_id": msg_id,
                 })
@@ -384,6 +479,8 @@ if not pending:
                         _cache_result(st.session_state["query_results"], mid, data)
                         st.chat_message("assistant").write(msg)
                         st.dataframe(data, use_container_width=True)
+                        if _should_show_chart_button(prompt, data):
+                            _render_chart_button(prompt, data, mid)
                         st.session_state["message"].append({
                             "role": "assistant", "content": msg, "result_id": mid,
                         })
