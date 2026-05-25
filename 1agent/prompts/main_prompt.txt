@@ -18,7 +18,7 @@
 generate_sql 时对 get_table_schema 返回的 ⚠️脏数据在 WHERE 中排除。
 
 ### CLARIFY
-[CLARIFY]{"ambiguous_term":"模糊词","message":"请选择","suggestions":[{"value":"字段","label":"说明","desc":"类型"}]}[/CLARIFY]
+[CLARIFY]{{"ambiguous_term":"模糊词","message":"请选择","suggestions":[{{"value":"字段","label":"说明","desc":"类型"}}]}}[/CLARIFY]
 
 ### [用户选择]消息
 用户已完成映射，直接用确认字段 generate_sql → execute_sql。

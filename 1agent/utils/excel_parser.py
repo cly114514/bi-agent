@@ -1,3 +1,4 @@
+from __future__ import annotations
 import statistics
 import re
 from pathlib import Path

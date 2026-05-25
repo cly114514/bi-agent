@@ -1,26 +1,31 @@
 from abc import ABC, abstractmethod
 from typing import Optional, Union
 from langchain_core.embeddings import Embeddings
-from langchain_community.chat_models.tongyi import BaseChatModel
-from langchain_community.embeddings import DashScopeEmbeddings
-from langchain_community.chat_models.tongyi import ChatTongyi
+from langchain_openai import ChatOpenAI
 from utils.config_handler import rag_conf
 
 
 class BaseModelFactory(ABC):
     @abstractmethod
-    def generator(self) -> Optional[Union[Embeddings, BaseChatModel]]:
+    def generator(self) -> Optional[Union[Embeddings, ChatOpenAI]]:
         pass
 
 
 class ChatModelFactory(BaseModelFactory):
-    def generator(self) -> Optional[Union[Embeddings, BaseChatModel]]:
-        return ChatTongyi(model=rag_conf["chat_model_name"])
+    def generator(self) -> Optional[Union[Embeddings, ChatOpenAI]]:
+        import os
+        api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("DASHSCOPE_API_KEY", "")
+        return ChatOpenAI(
+            model="deepseek-v4-flash",
+            api_key=api_key,
+            base_url="https://api.deepseek.com/v1",
+        )
 
 
 class EmbeddingsFactory(BaseModelFactory):
-    def generator(self) -> Optional[Union[Embeddings, BaseChatModel]]:
-        return DashScopeEmbeddings(model=rag_conf["embedding_model_name"])
+    def generator(self) -> Optional[Union[Embeddings, ChatOpenAI]]:
+        # DeepSeek embeddings not yet supported; use a stub
+        return None
 
 
 chat_model = ChatModelFactory().generator()
