@@ -7,11 +7,12 @@ from agent.tools.middleware import monitor_tool, log_before_model
 
 class ReactAgent:
     def __init__(self):
+        middleware = [m for m in [monitor_tool, log_before_model] if m is not None]
         self.agent = create_agent(
             model=chat_model,
             system_prompt=load_system_prompts(),
             tools=[generate_sql, get_table_schema, execute_sql],
-            middleware=[monitor_tool, log_before_model],
+            middleware=middleware if middleware else None,
         )
 
     def execute_stream(self, query: str):

@@ -65,8 +65,11 @@ def execute_sql(sql: str) -> str:
         _current_schema.get("sheets", [{}])[0].get("name", "") if _current_schema else ""
     )
     if actual_table:
-        pattern = r'\b(?:' + '|'.join(example_tables) + r')\b'
-        sql = re.sub(pattern, actual_table, sql, flags=re.IGNORECASE)
+        # Validate table name (allow only safe chars)
+        import re as _re
+        if _re.match(r'^[\w\u4e00-\u9fff]+$', actual_table):
+            pattern = r'\b(?:' + '|'.join(example_tables) + r')\b'
+            sql = _re.sub(pattern, actual_table, sql, flags=_re.IGNORECASE)
 
     # 自动替换 RAG 常见英文列名为实际中文列名
     col_map = {}

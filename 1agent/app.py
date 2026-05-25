@@ -140,6 +140,16 @@ def strip_schema_content(text: str) -> str:
     return text.strip()
 
 
+# Limit query_results to prevent memory growth
+MAX_CACHED_RESULTS = 50
+def _cache_result(results: dict, msg_id: str, data: list):
+    results[msg_id] = data
+    # Evict oldest when exceeding limit
+    if len(results) > MAX_CACHED_RESULTS:
+        oldest = next(iter(results))
+        del results[oldest]
+
+
 def _extract_original_query(text: str) -> str:
     m = re.search(r"\[原问题\]\s*(.*?)$", text, re.DOTALL)
     if m:
@@ -342,7 +352,7 @@ if not pending:
                 data = exec_result.get("data", [])
                 msg = f"查询完成，返回 {row_count} 行数据"
                 msg_id = f"result_{len(st.session_state['message'])}"
-                st.session_state["query_results"][msg_id] = data
+                _cache_result(st.session_state["query_results"], msg_id, data)
                 st.chat_message("assistant").write(msg)
                 st.dataframe(data, use_container_width=True)
                 st.session_state["message"].append({
@@ -371,7 +381,7 @@ if not pending:
                         rc = result.get("row_count", 0)
                         msg = f"查询完成，返回 {rc} 行数据"
                         mid = f"result_{len(st.session_state['message'])}"
-                        st.session_state["query_results"][mid] = data
+                        _cache_result(st.session_state["query_results"], mid, data)
                         st.chat_message("assistant").write(msg)
                         st.dataframe(data, use_container_width=True)
                         st.session_state["message"].append({

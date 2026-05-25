@@ -80,12 +80,15 @@ class MySQLHandler:
         cols = ", ".join(safe_headers)
         sql = f"INSERT INTO `{safe_name}` ({cols}) VALUES ({placeholders})"
 
+        inserted = 0
         for row in rows:
             try:
                 cur.execute(sql, row)
-            except Exception:
-                continue
+                inserted += 1
+            except Exception as e:
+                logger.warning(f"[MySQL] INSERT failed for row: {e}")
         conn.commit()
+        logger.info(f"[MySQL] Inserted {inserted}/{len(rows)} rows into {safe_name}")
         conn.close()
 
     def execute_query(self, sql: str) -> dict:
