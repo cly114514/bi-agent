@@ -31,8 +31,8 @@ class ReactAgent:
             "agent_scratchpad": [],
             "intermediate_steps": [],
         })
-        msgs = result.get("messages", [])
-        if msgs and msgs[-1].content:
+        msgs = result if isinstance(result, list) else result.get("messages", [])
+        if msgs and hasattr(msgs[-1], 'content') and msgs[-1].content:
             yield msgs[-1].content.strip() + "\n"
 
 
