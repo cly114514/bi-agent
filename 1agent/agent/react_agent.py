@@ -15,7 +15,6 @@ def generate_sql(query: str) -> str:
 @tool
 def get_table_schema() -> str:
     """获取当前已上传数据表的字段结构信息"""
-    from agent.tools.agent_tools import _current_schema
     from agent.tools.agent_tools import get_table_schema as _get_schema
     return _get_schema.func()
 
@@ -43,20 +42,25 @@ class ReactAgent:
             self.system_msg,
             HumanMessage(content=query),
         ]
-        last_reasoning = None
-        while True:
+        last_reasoning = ""
+        turn_count = 0
+        max_turns = 10
+
+        while turn_count < max_turns:
+            turn_count += 1
             llm_with_tools = self.llm.bind_tools(self.tools)
-            invoke_args = [messages]
-            invoke_kwargs = {}
             if last_reasoning:
-                invoke_kwargs["extra_body"] = {"reasoning_content": last_reasoning}
-            if invoke_kwargs:
-                response = llm_with_tools.invoke(*invoke_args, **invoke_kwargs)
+                response = llm_with_tools.invoke(messages, extra_body={"reasoning_content": last_reasoning})
             else:
-                response = llm_with_tools.invoke(*invoke_args)
-            last_reasoning = None
+                response = llm_with_tools.invoke(messages)
+
+            # Capture reasoning_content for next turn
+            last_reasoning = ""
             if hasattr(response, "additional_kwargs") and response.additional_kwargs:
-                last_reasoning = response.additional_kwargs.get("reasoning_content")
+                rc = response.additional_kwargs.get("reasoning_content")
+                if rc:
+                    last_reasoning = rc
+
             messages.append(response)
 
             if not response.tool_calls:
@@ -75,9 +79,8 @@ class ReactAgent:
                     tool_result = f"{{\"success\": false, \"error\": \"{e}\"}}"
                 messages.append(ToolMessage(content=tool_result, tool_call_id=tc["id"]))
 
-            if len(messages) > 20:
-                yield "会话过长，请重新开始"
-                break
+        if turn_count >= max_turns:
+            yield "会话过长，请重新开始"
 
 
 if __name__ == "__main__":
