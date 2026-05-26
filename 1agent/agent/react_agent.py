@@ -29,10 +29,11 @@ class ReactAgent:
             "agent_scratchpad": [],
             "intermediate_steps": [],
         }
-        for chunk in self.agent.stream(input_dict):
-            msgs = chunk.get("messages", [])
-            if msgs and msgs[-1].content:
-                yield msgs[-1].content.strip() + "\n"
+        # Use ainvoke (async invoke) and iterate - works without stream_mode
+        result = self.agent.invoke(input_dict)
+        msgs = result.get("messages", [])
+        if msgs and msgs[-1].content:
+            yield msgs[-1].content.strip() + "\n"
 
 
 if __name__ == "__main__":
