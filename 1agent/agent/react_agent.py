@@ -29,6 +29,7 @@ class ReactAgent:
             "input": query,
             "chat_history": [],
             "agent_scratchpad": [],
+            "intermediate_steps": [],
         })
         msgs = result.get("messages", [])
         if msgs and msgs[-1].content:
