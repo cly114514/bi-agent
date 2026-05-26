@@ -22,11 +22,17 @@ class ReactAgent:
         )
 
     def execute_stream(self, query: str):
-        input_dict = {"messages": [{"role": "user", "content": query}]}
-        for chunk in self.agent.stream(input_dict, stream_mode="values"):
-            latest_message = chunk["messages"][-1]
-            if latest_message.content:
-                yield latest_message.content.strip() + "\n"
+        input_dict = {
+            "input": query,
+            "tools": [],
+            "tool_names": [],
+            "agent_scratchpad": [],
+            "intermediate_steps": [],
+        }
+        for chunk in self.agent.stream(input_dict):
+            msgs = chunk.get("messages", [])
+            if msgs and msgs[-1].content:
+                yield msgs[-1].content.strip() + "\n"
 
 
 if __name__ == "__main__":
