@@ -46,10 +46,14 @@ class ReactAgent:
         last_reasoning = None
         while True:
             llm_with_tools = self.llm.bind_tools(self.tools)
-            invoke_kwargs = {"messages": messages}
+            invoke_args = [messages]
+            invoke_kwargs = {}
             if last_reasoning:
                 invoke_kwargs["extra_body"] = {"reasoning_content": last_reasoning}
-            response = llm_with_tools.invoke(**invoke_kwargs)
+            if invoke_kwargs:
+                response = llm_with_tools.invoke(*invoke_args, **invoke_kwargs)
+            else:
+                response = llm_with_tools.invoke(*invoke_args)
             last_reasoning = None
             if hasattr(response, "additional_kwargs") and response.additional_kwargs:
                 last_reasoning = response.additional_kwargs.get("reasoning_content")
