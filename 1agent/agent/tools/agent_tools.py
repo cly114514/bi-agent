@@ -25,6 +25,16 @@ def generate_sql(query: str) -> str:
     return rag.rag_summarize(query)
 
 
+@tool(description="执行查询（无MySQL时直接查Excel数据）")
+def execute_excel(query: str) -> str:
+    """当MySQL不可用时，直接在上传的Excel数据上执行查询"""
+    if _current_schema and _current_schema.get("sheets"):
+        from utils.excel_query import execute_excel_query
+        result = execute_excel_query(_current_schema, query)
+        return json.dumps(result, ensure_ascii=False, default=str)
+    return json.dumps({"success": False, "error": "尚未上传Excel数据"})
+
+
 @tool(description="获取当前已上传数据表的字段结构信息，包含字段名、数据类型、所有唯一值和脏数据标记")
 def get_table_schema() -> str:
     if not _current_schema:

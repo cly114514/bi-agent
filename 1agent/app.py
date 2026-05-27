@@ -488,6 +488,26 @@ if not pending:
                     else:
                         st.chat_message("assistant").error(f"SQL执行失败: {result.get('error', result) if result else '未知'}")
                         st.session_state["message"].append({"role": "assistant", "content": "查询失败"})
+                elif st.session_state.get("excel_parsed"):
+                    # MySQL不可用但有Excel数据 → 尝试Excel直查
+                    from utils.excel_query import execute_excel_query
+                    excel_result = execute_excel_query(st.session_state["excel_parsed"], prompt)
+                    if excel_result.get("success"):
+                        data = excel_result.get("data", [])
+                        rc = excel_result.get("row_count", 0)
+                        msg = f"查询完成，返回 {rc} 行数据"
+                        mid = f"result_{len(st.session_state['message'])}"
+                        _cache_result(st.session_state["query_results"], mid, data)
+                        st.chat_message("assistant").write(msg)
+                        st.dataframe(data, use_container_width=True)
+                        if _should_show_chart_button(prompt, data):
+                            _render_chart_button(prompt, data, mid)
+                        st.session_state["message"].append({
+                            "role": "assistant", "content": msg, "result_id": mid,
+                        })
+                    else:
+                        st.chat_message("assistant").write(f"无法执行查询: {excel_result.get('error', '未知')}")
+                        st.session_state["message"].append({"role": "assistant", "content": content})
                 else:
                     st.chat_message("assistant").write(content)
                     st.session_state["message"].append({"role": "assistant", "content": content})
