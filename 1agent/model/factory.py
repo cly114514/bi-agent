@@ -14,13 +14,19 @@ class BaseModelFactory(ABC):
 class ChatModelFactory(BaseModelFactory):
     def generator(self) -> Optional[Union[Embeddings, ChatOpenAI]]:
         import os
-        api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("DASHSCOPE_API_KEY", "")
+        api_key = (
+            os.environ.get("OPENAI_API_KEY") or
+            os.environ.get("DEEPSEEK_API_KEY") or
+            os.environ.get("DASHSCOPE_API_KEY") or
+            ""
+        )
         if not api_key:
             return None
         return ChatOpenAI(
-            model="deepseek-chat",
+            model="deepseek-v4-flash",
             api_key=api_key,
             base_url="https://api.deepseek.com/v1",
+            extra_body={"thinking_mode": "disable"},
         )
 
 

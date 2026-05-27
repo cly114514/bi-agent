@@ -5,7 +5,13 @@ from rag.rag_service import RagSummarizeService
 from utils.mysql_handler import get_mysql
 from utils.logger_handler import logger
 
-rag = RagSummarizeService()
+rag = None  # lazy init
+
+def _get_rag():
+    global rag
+    if rag is None:
+        rag = RagSummarizeService()
+    return rag
 _current_schema: dict = {}
 _current_table_name: str = ""
 
@@ -22,7 +28,7 @@ def set_table_name(name: str):
 
 @tool(description="生成SQL查询语句：根据用户需求和上传的Excel数据表字段，从向量库检索相似的SQL示例，生成精准的SQL查询语句")
 def generate_sql(query: str) -> str:
-    return rag.rag_summarize(query)
+    return _get_rag().rag_summarize(query)
 
 
 @tool(description="执行查询（无MySQL时直接查Excel数据）")

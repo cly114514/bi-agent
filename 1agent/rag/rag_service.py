@@ -22,6 +22,8 @@ class RagSummarizeService(object):
         self.chain = self._init_chain()
 
     def _init_chain(self):
+        if self.model is None:
+            return None
         chain = self.prompt_template | self.model | StrOutputParser()
         return chain
 
@@ -29,6 +31,8 @@ class RagSummarizeService(object):
         return self.retriever.invoke(query)
 
     def rag_summarize(self, query: str) -> str:
+        if self.chain is None:
+            return "SELECT '未找到匹配的SQL示例，请补充数据源信息' AS result"
         context_docs = self.retriever_docs(query)
         if not context_docs:
             return "SELECT '未找到匹配的SQL示例，请补充数据源信息' AS result"
