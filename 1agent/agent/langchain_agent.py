@@ -44,16 +44,13 @@ chat_base.BaseChatOpenAI._create_chat_result = _patched_create_chat_result
 
 class DeepSeekChat(ChatOpenAI):
     """
-    ChatOpenAI subclass for DeepSeek.
+    ChatOpenAI subclass for DeepSeek deepseek-v4-flash.
 
-    Uses deepseek-chat which handles tool-calling correctly without requiring
-    special reasoning_content handling. Also stores reasoning_content from
-    responses for robustness.
+    Uses deepseek-v4-flash for tool-calling with reasoning_content handling.
     """
 
     def __init__(self, **kwargs: Any) -> None:
-        # Use deepseek-chat (not deepseek-v4-flash) because deepseek-chat handles
-        # tool-calling without requiring reasoning_content round-tripping.
+        # Use deepseek-v4-flash for tool-calling with reasoning_content support.
         kwargs.setdefault("extra_body", {})
         super().__init__(**kwargs)
         self._reasoning_content: str = ""
@@ -65,7 +62,7 @@ class DeepSeekChat(ChatOpenAI):
         run_manager: Any = None,
         **kwargs: Any,
     ) -> Any:
-        # Inject reasoning_content if we have one (from deepseek-v4-flash mode)
+        # Inject reasoning_content if we have one from previous deepseek-v4-flash response
         if self._reasoning_content:
             self.extra_body["reasoning_content"] = self._reasoning_content
         else:
@@ -104,7 +101,7 @@ class DeepSeekChat(ChatOpenAI):
 
 def create_deepseek_llm(
     api_key: str | None = None,
-    model: str = "deepseek-chat",
+    model: str = "deepseek-v4-flash",
     **kwargs: Any,
 ) -> DeepSeekChat:
     """Factory to create a DeepSeek LLM."""
