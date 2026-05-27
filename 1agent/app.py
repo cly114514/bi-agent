@@ -1,4 +1,6 @@
 from __future__ import annotations
+import os
+os.environ.setdefault("OPENAI_API_KEY", os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("DASHSCOPE_API_KEY", ""))
 import json
 import re
 import streamlit as st
