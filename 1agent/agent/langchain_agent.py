@@ -50,24 +50,20 @@ class DeepSeekChat(ChatOpenAI):
     """
 
     def __init__(self, **kwargs: Any) -> None:
-        # Use deepseek-v4-flash for tool-calling with reasoning_content support.
         kwargs.setdefault("extra_body", {})
         super().__init__(**kwargs)
         self._reasoning_content: str = ""
+        self._wrap_client_create()
 
-    def _generate(
-        self,
-        messages: list,
-        stop: list | None = None,
-        run_manager: Any = None,
-        **kwargs: Any,
-    ) -> Any:
-        # Inject reasoning_content if we have one from previous deepseek-v4-flash response
-        if self._reasoning_content:
-            self.extra_body["reasoning_content"] = self._reasoning_content
-        else:
-            self.extra_body.pop("reasoning_content", None)
-        return super()._generate(messages, stop=stop, run_manager=run_manager, **kwargs)
+    def _wrap_client_create(self):
+        """Wrap client.with_raw_response.create to inject reasoning_content on every request."""
+        orig = self.client.with_raw_response.create
+        def wrapped(*args, **kwargs):
+            if self._reasoning_content:
+                kwargs.setdefault("extra_body", {})
+                kwargs["extra_body"]["reasoning_content"] = self._reasoning_content
+            return orig(*args, **kwargs)
+        self.client.with_raw_response.create = wrapped
 
     def _get_request_payload(self, input_, stop=None, **kwargs):
         """Override to inject reasoning_content into the payload's extra_body."""

@@ -26,7 +26,7 @@ class ChatModelFactory(BaseModelFactory):
             model="deepseek-v4-flash",
             api_key=api_key,
             base_url="https://api.deepseek.com/v1",
-            extra_body={"thinking_mode": "disable"},
+            extra_body={"thinking_mode": "enable"},
         )
 
 
