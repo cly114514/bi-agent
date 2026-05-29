@@ -56,21 +56,21 @@ class DeepSeekChat(ChatOpenAI):
         self._wrap_client_create()
 
     def _wrap_client_create(self):
-        """Wrap client.with_raw_response.create to inject reasoning_content on every request."""
+        """Wrap client to pass through requests without extra_body injection."""
         orig = self.client.with_raw_response.create
         def wrapped(*args, **kwargs):
-            if self._reasoning_content:
-                kwargs.setdefault("extra_body", {})
-                kwargs["extra_body"]["reasoning_content"] = self._reasoning_content
             return orig(*args, **kwargs)
         self.client.with_raw_response.create = wrapped
 
     def _get_request_payload(self, input_, stop=None, **kwargs):
-        """Override to inject reasoning_content into the payload's extra_body."""
+        """Override to inject reasoning_content into assistant messages."""
         result = super()._get_request_payload(input_, stop=stop, **kwargs)
-        if self._reasoning_content:
-            result.setdefault("extra_body", dict(self.extra_body))
-            result["extra_body"]["reasoning_content"] = self._reasoning_content
+        messages = result.get("messages", [])
+        for msg in messages:
+            if msg.get("role") == "assistant":
+                if "reasoning_content" not in msg:
+                    rc = self._reasoning_content if self._reasoning_content else ""
+                    msg["reasoning_content"] = rc
         return result
 
     def _create_chat_result(
@@ -81,14 +81,24 @@ class DeepSeekChat(ChatOpenAI):
         """Override to capture reasoning_content from the raw response."""
         result = super()._create_chat_result(response, generation_info)
         try:
-            raw = response.model_dump() if hasattr(response, "model_dump") else response
+            import json as _json
+            if hasattr(response, "text"):
+                raw = _json.loads(response.text)
+            elif hasattr(response, "model_dump"):
+                raw = response.model_dump()
+            elif hasattr(response, "to_dict"):
+                raw = response.to_dict()
+            else:
+                raw = response
             choices = raw.get("choices", []) if isinstance(raw, dict) else []
             if choices:
-                rc = choices[0].get("message", {}).get("reasoning_content")
-                if rc and result.generations:
-                    gen_msg = result.generations[0].message
-                    if hasattr(gen_msg, "additional_kwargs"):
-                        gen_msg.additional_kwargs["reasoning_content"] = rc
+                msg = choices[0].get("message", {})
+                rc = msg.get("reasoning_content", "")
+                if rc:
+                    if result.generations:
+                        gen_msg = result.generations[0].message
+                        if hasattr(gen_msg, "additional_kwargs"):
+                            gen_msg.additional_kwargs["reasoning_content"] = rc
                     self._reasoning_content = rc
         except Exception:
             pass
@@ -97,10 +107,10 @@ class DeepSeekChat(ChatOpenAI):
 
 def create_deepseek_llm(
     api_key: str | None = None,
-    model: str = "deepseek-v4-flash",
+    model: str = "deepseek-v4-pro",
     **kwargs: Any,
 ) -> DeepSeekChat:
-    """Factory to create a DeepSeek LLM."""
+    """Factory to create a DeepSeek LLM with reasoning_content handling."""
     if not api_key:
         api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("DASHSCOPE_API_KEY", "")
     return DeepSeekChat(model=model, api_key=api_key, base_url="https://api.deepseek.com/v1", **kwargs)
@@ -155,6 +165,14 @@ class LangChainToolAgent:
             if not response.tool_calls:
                 break
 
+            # 保留 reasoning_content 到 AIMessage，DeepSeek 思考模式要求回传
+            rc = response.additional_kwargs.get("reasoning_content") if hasattr(response, 'additional_kwargs') else None
+            if rc:
+                response = AIMessage(
+                    content=response.content or "",
+                    tool_calls=response.tool_calls,
+                    additional_kwargs={"reasoning_content": rc},
+                )
             messages.append(response)
 
             for tc in response.tool_calls:

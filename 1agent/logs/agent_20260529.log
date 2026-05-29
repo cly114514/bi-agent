@@ -1,0 +1,100 @@
+2026-05-29 10:16:01,517 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 10:16:06,591 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 10:16:06,824 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 10:24:22,633 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 10:24:26,922 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 10:24:27,188 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 10:30:04,621 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 10:30:12,394 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 10:30:12,574 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 10:32:32,850 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 10:32:37,735 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 10:32:37,923 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 10:33:32,289 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 10:33:32,290 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT * FROM Sheet1  WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 LIMIT 10
+2026-05-29 10:33:32,333 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行
+2026-05-29 10:36:52,058 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 10:36:56,442 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 10:36:56,690 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 10:40:52,852 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 10:41:00,024 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 10:41:00,250 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 10:45:23,795 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 10:45:27,971 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 10:45:28,123 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 10:48:54,364 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 10:48:59,358 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 10:48:59,631 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 10:49:26,971 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 10:49:26,971 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT * FROM Sheet1 WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 
+2026-05-29 10:49:27,036 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 626 行
+2026-05-29 10:49:40,961 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 10:49:41,179 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: 无
+2026-05-29 10:49:41,436 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 1 行
+2026-05-29 10:49:45,188 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 10:49:45,430 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 10:53:38,891 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 10:53:42,965 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 10:53:43,179 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 10:53:58,344 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 10:53:58,344 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT * FROM Sheet1  WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 LIMIT 10
+2026-05-29 10:53:58,388 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行
+2026-05-29 10:55:09,134 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 10:55:09,135 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT `合同ID`, `客户ID`, `合同类型`, `总金额`, `合同付款类型`, `注册时间`, `购买数量`, `合同签约时间`, `购买的产品`, `是否已经交货` FROM `Sheet1` WHERE `总金额` > 0  AND `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 ORDER BY `总金额` DESC LIMI
+2026-05-29 10:55:09,189 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 5 行
+2026-05-29 10:56:01,737 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 10:56:01,737 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT 合同ID, 客户ID, 合同类型, 总金额, 合同付款类型, 注册时间, 购买数量, 合同签约时间, 购买的产品, 是否已经交货 FROM Sheet1  WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 ORDER BY CAST(总金额 AS DECIMAL(18,2)) DESC LIMIT 10
+2026-05-29 10:56:01,780 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行
+2026-05-29 10:57:34,386 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 10:57:34,386 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT 合同ID, 客户ID, 合同类型, 总金额, 合同付款类型, 注册时间, 购买数量, 合同签约时间, 购买的产品, 是否已经交货 FROM Sheet1 WHERE 总金额 IS NOT NULL AND 总金额 != '好的'  AND `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 ORDER BY CAST(总金额 AS DEC
+2026-05-29 10:57:34,429 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行
+2026-05-29 11:01:15,634 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 11:01:23,356 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 11:01:23,554 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 11:01:38,166 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 11:01:38,166 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT * FROM Sheet1  WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 ORDER BY 合同签约时间 DESC LIMIT 10
+2026-05-29 11:01:38,198 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行
+2026-05-29 11:11:27,743 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 11:11:32,633 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 11:11:32,851 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 11:11:46,083 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 11:11:46,084 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT * FROM Sheet1  WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 LIMIT 10
+2026-05-29 11:11:46,145 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行
+2026-05-29 11:14:17,297 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 11:14:28,637 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 11:14:28,867 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 11:14:32,103 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 11:14:32,300 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 11:14:46,100 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 11:14:46,100 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT * FROM Sheet1  WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 ORDER BY `合同签约时间` ASC LIMIT 10
+2026-05-29 11:14:46,152 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行
+2026-05-29 11:17:56,314 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 11:18:00,825 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 11:18:01,062 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 11:18:13,387 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 11:18:13,387 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT * FROM Sheet1  WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 LIMIT 10
+2026-05-29 11:18:13,444 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行
+2026-05-29 11:21:23,947 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 11:21:29,202 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 11:21:29,446 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 11:21:44,021 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 11:21:44,021 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT * FROM Sheet1  WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 ORDER BY 总金额 DESC LIMIT 10
+2026-05-29 11:21:44,082 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行
+2026-05-29 11:27:31,412 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 11:27:35,739 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 11:27:35,963 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 11:27:52,299 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 11:27:52,300 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT 合同ID, 客户ID, 合同类型, 总金额, 合同付款类型, 注册时间, 购买数量, 合同签约时间, 购买的产品, 是否已经交货 FROM Sheet1  WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 ORDER BY 总金额 DESC LIMIT 10
+2026-05-29 11:27:52,368 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行
+2026-05-29 11:30:28,785 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 11:30:35,029 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 11:30:35,241 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 11:30:45,623 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 11:30:45,623 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT * FROM Sheet1  WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 LIMIT 10
+2026-05-29 11:30:45,677 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行
+2026-05-29 11:33:00,757 - agent - INFO - mysql_handler.py:125 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-29 11:33:06,084 - agent - WARNING - mysql_handler.py:91 - [MySQL] INSERT failed for row: (1265, "Data truncated for column '总金额' at row 1")
+2026-05-29 11:33:06,273 - agent - INFO - mysql_handler.py:93 - [MySQL] Inserted 667/668 rows into Sheet1
+2026-05-29 11:33:16,677 - agent - INFO - agent_tools.py:130 - [execute_sql] 脏数据过滤: ["`总金额` NOT IN ('好的')", '`总金额` > 0', '`购买数量` > 0']
+2026-05-29 11:33:16,677 - agent - INFO - agent_tools.py:144 - [execute_sql] 注入后SQL: SELECT * FROM Sheet1  WHERE `总金额` NOT IN ('好的') AND `总金额` > 0 AND `购买数量` > 0 ORDER BY 总金额 DESC LIMIT 10
+2026-05-29 11:33:16,711 - agent - INFO - agent_tools.py:159 - [execute_sql] 执行SQL返回 10 行

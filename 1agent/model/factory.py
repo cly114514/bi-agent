@@ -23,10 +23,9 @@ class ChatModelFactory(BaseModelFactory):
         if not api_key:
             return None
         return ChatOpenAI(
-            model="deepseek-v4-flash",
+            model="deepseek-v4-pro",
             api_key=api_key,
             base_url="https://api.deepseek.com/v1",
-            extra_body={"thinking_mode": "enable"},
         )
 
 

@@ -36,9 +36,16 @@ def _ensure_cn_font():
         return
 
     font_paths = [
+        # Windows
+        "C:/Windows/Fonts/msyh.ttc",
+        "C:/Windows/Fonts/simhei.ttf",
+        "C:/Windows/Fonts/simsun.ttc",
+        "C:/Windows/Fonts/mingliu.ttc",
+        # macOS
         "/System/Library/Fonts/PingFang.ttc",
         "/System/Library/Fonts/STHeiti Light.ttc",
         "/System/Library/Fonts/Hiragino Sans GB.ttc",
+        # Linux
         "/usr/share/fonts/truetype/wqy-microhei/wqy-microhei.ttc",
         "/usr/share/fonts/truetype/wqy-zenhei/wqy-zenhei.ttc",
     ]
@@ -57,7 +64,11 @@ def _ensure_cn_font():
 
 
 def _sanitize_label(s: str, max_len: int = 12) -> str:
+    if s is None:
+        return ""
     s = str(s).strip()
+    if not s or s.lower() == "none":
+        return ""
     if len(s) > max_len:
         return s[: max_len - 1] + "…"
     return s
@@ -65,7 +76,7 @@ def _sanitize_label(s: str, max_len: int = 12) -> str:
 
 def render_data_chart(
     data: list[dict],
-    chart_type: Literal["bar", "pie", "line"] = "bar",
+    chart_type: str = "bar",
     title: str = "",
     width: int = 10,
     height: int = 5,
@@ -73,7 +84,7 @@ def render_data_chart(
     """
     根据查询结果数据生成matplotlib图表，返回PNG字节。
     data: SQL查询返回的字典列表 [{col1: val1, col2: val2}, ...]
-    chart_type: "bar" | "pie" | "line"
+    chart_type: "bar" | "pie" | "line" | "scatter"
     """
     if not _HAS_MATPLOTLIB:
         raise RuntimeError("matplotlib未安装，请 pip install matplotlib")
@@ -131,6 +142,18 @@ def render_data_chart(
         ax.set_ylabel(values_col, fontsize=10)
         ax.set_title(title or f"{values_col} 趋势", fontsize=12, pad=10)
         plt.xticks(rotation=45, ha="right")
+
+    elif chart_type == "scatter":
+        if len(cols) >= 3:
+            x_col, y_col = cols[1], cols[2]
+        else:
+            x_col, y_col = cols[0], cols[1]
+        x_vals = [float(row[x_col]) if str(row[x_col]).replace(".","").replace("-","").isdigit() else 0 for row in data]
+        y_vals = [float(row[y_col]) if str(row[y_col]).replace(".","").replace("-","").isdigit() else 0 for row in data]
+        ax.scatter(x_vals, y_vals, c="#5B8DEF", s=80, alpha=0.7, edgecolors="#3B6FC4", linewidth=0.5)
+        ax.set_xlabel(x_col, fontsize=10)
+        ax.set_ylabel(y_col, fontsize=10)
+        ax.set_title(title or f"{y_col} vs {x_col}", fontsize=12, pad=10)
 
     plt.tight_layout()
 
