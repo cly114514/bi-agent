@@ -17,21 +17,27 @@
 ### 1. 安装依赖
 
 ```bash
-pip install streamlit langchain langchain-chroma langchain-community dashscope pymysql openpyxl python-dotenv pyyaml
+pip install -r requirements.txt
+```
+
+或手动安装：
+
+```bash
+pip install streamlit langchain langchain-chroma langchain-community pymysql openpyxl python-dotenv pyyaml plotly kaleido
 ```
 
 ### 2. 配置环境变量
 
-设置阿里云百炼 API Key：
+设置 DeepSeek API Key：
 
 ```bash
-set DASHSCOPE_API_KEY=你的百炼API密钥
+export DEEPSEEK_API_KEY=sk-你的DeepSeek密钥
 ```
 
 或在项目根目录创建 `.env` 文件：
 
 ```
-DASHSCOPE_API_KEY=你的百炼API密钥
+DEEPSEEK_API_KEY=sk-你的DeepSeek密钥
 ```
 
 ### 3. 配置 MySQL
@@ -93,6 +99,7 @@ embedding_model_name: text-embedding-v4
 ├── utils/
 │   ├── excel_parser.py     # Excel 解析 + 脏数据检测
 │   ├── mysql_handler.py    # MySQL 连接/建表/查询
+│   ├── chart_maker.py      # Plotly 图表引擎(自动渲染 + 类型切换器)
 │   └── ...
 ├── prompts/
 │   └── main_prompt.txt     # Agent 系统提示词
@@ -105,11 +112,27 @@ embedding_model_name: text-embedding-v4
 
 | 库 | 用途 |
 |---|------|
-| `streamlit` | Web 界面 |
+| `streamlit` (≥1.40) | Web 界面 |
 | `langchain` + `langchain-chroma` | Agent 框架 + 向量存储 |
-| `langchain-community` | ChatTongyi / Embeddings 集成 |
-| `dashscope` | 阿里云百炼 SDK |
+| `langchain-community` | LLM 集成 |
 | `pymysql` | MySQL 连接 |
 | `openpyxl` | Excel 读写 |
 | `python-dotenv` | 环境变量加载 |
 | `pyyaml` | YAML 配置解析 |
+| `plotly` | 交互式图表引擎 |
+| `kaleido` | Plotly 静态图导出（PNG） |
+
+## 图表类型
+
+每次查询返回 ≥2 列且 ≥2 行的结果会自动渲染一张可交互的 Plotly 图表，上方有 `segmented_control` 可切换类型。可用类型由数据形状自动推断：
+
+| 类型 | 适用条件 |
+|---|---|
+| 分组柱状图（默认） | 1 个分类/日期列 + ≥2 数值列 |
+| 多折线 | ≥2 数值列 |
+| 堆叠柱状图 | 同上 + 所有数值非负 |
+| 100% 堆叠 | 同上 + ≤12 行 |
+| 饼图 | 1 数值列、2-8 行、全部非负 |
+| 单系列柱 | 1 数值列、2-50 行 |
+
+鼠标悬停图表可看到 modebar：缩放、平移、自动缩放、下载 PNG、下载 HTML、重置。图表主题跟随 Streamlit 明暗主题自动切换。

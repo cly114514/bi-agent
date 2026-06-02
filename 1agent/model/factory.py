@@ -17,7 +17,6 @@ class ChatModelFactory(BaseModelFactory):
         api_key = (
             os.environ.get("OPENAI_API_KEY") or
             os.environ.get("DEEPSEEK_API_KEY") or
-            os.environ.get("DASHSCOPE_API_KEY") or
             ""
         )
         if not api_key:

@@ -4,6 +4,84 @@
 
 ---
 
+## [v2.1.0] - 2026-06-02
+
+### 图表子系统重写：Plotly 引擎 + 自动渲染
+
+#### 核心改动
+
+**1. 引擎迁移：matplotlib → Plotly**
+
+- `utils/chart_maker.py` 全部重写，基于 `plotly.graph_objects` + `kaleido`
+- 弃用 `_ensure_cn_font` 硬编码字体路径，改用系统字体栈（`PingFang SC, Microsoft YaHei, Hiragino Sans GB, Noto Sans CJK SC`）
+- 支持 Streamlit 主题联动：`plotly_white` / `plotly_dark` 自动切换
+- 每张图自带 modebar：缩放、平移、自动缩放、下载 PNG、下载 HTML、重置
+
+**2. 自动渲染 + 类型切换器**
+
+- 删掉"📊 生成图表"按钮；图表与表格**同时**渲染
+- 图表上方 `st.segmented_control` 列出当前数据形状下所有可用的图表类型
+- 用户切换类型时图表立即重画，刷新浏览器后选择持久化
+- 修复了之前刷新页面后图表消失的 bug
+
+**3. 6 种图表类型 + 数据驱动推断**
+
+| 类型 ID | 标签 | 适用场景 |
+|---|---|---|
+| `grouped_bar` | 分组柱状图 | 1 个分类 + ≥2 数值（默认） |
+| `multi_line` | 多折线 | ≥2 数值（含时间序列） |
+| `stacked_bar` | 堆叠柱状图 | 同上且数值非负 |
+| `stacked_100` | 100% 堆叠 | 同上且 ≤12 行 |
+| `pie` | 饼图 | 1 数值、2-8 行、全部非负 |
+| `single_bar` | 单系列柱 | 1 数值、2-50 行 |
+
+自动推断规则见 `utils/chart_maker.py:detect_chart_options`。
+
+**4. 删除 AI 配图功能**
+
+- 移除 `generate_ai_image`（原 DashScope wanx 调用）
+- 移除 `app.py:_AI_CHART_KEYWORDS` 与 `chart_type == "ai"` 分支
+- 移除 `requirements.txt` 中的 `dashscope` 与 `matplotlib`、`pillow` 依赖
+
+**5. DASHSCOPE_API_KEY 兼容回退全部下线**
+
+- `app.py:3`、`agent/langchain_agent.py`（两处）、`model/factory.py` 都不再读 `DASHSCOPE_API_KEY`
+- 现在只读 `DEEPSEEK_API_KEY`（`OPENAI_API_KEY` 仍作为 LangChain 别名保留）
+
+**6. 依赖变化**
+
+```
++ plotly>=5.18.0       # 主图表引擎
++ kaleido>=0.2.1       # PNG 静态导出
++ streamlit>=1.40.0    # segmented_control 需要
+- dashscope>=1.14.0
+- matplotlib>=3.7.0
+- pillow>=10.0.0
+```
+
+#### 文件变更清单
+
+```
+新增/重写:
+  1agent/utils/chart_maker.py     # Plotly 完整重写, 新增 ChartOption/ShapeInfo/detect_chart_options/build_figure/render_chart/get_figure_html
+
+修改:
+  1agent/app.py                   # 删 ~110 行旧图表助手, 加 _show_data_with_chart + 修复 rerun 不重画图表的 bug
+  1agent/agent/langchain_agent.py # 删 DASHSCOPE_API_KEY 兜底
+  1agent/model/factory.py         # 删 DASHSCOPE_API_KEY 兜底
+  1agent/requirements.txt         # 依赖更新
+```
+
+#### 升级指南
+
+```bash
+pip install -U -r 1agent/requirements.txt
+# 旧用户的 .env 中如有 DASHSCOPE_API_KEY=... 可以删掉
+# 现只需 DEEPSEEK_API_KEY=sk-xxxxx
+```
+
+---
+
 ## [v2.0.0] - 2026-05-27
 
 ### 重大更新：DeepSeek API 集成 + LangChain 重构

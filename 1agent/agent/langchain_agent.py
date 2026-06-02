@@ -102,7 +102,7 @@ def create_deepseek_llm(
 ) -> DeepSeekChat:
     """Factory to create a DeepSeek LLM."""
     if not api_key:
-        api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("DASHSCOPE_API_KEY", "")
+        api_key = os.environ.get("DEEPSEEK_API_KEY", "")
     return DeepSeekChat(model=model, api_key=api_key, base_url="https://api.deepseek.com/v1", **kwargs)
 
 
@@ -122,7 +122,7 @@ class LangChainToolAgent:
         system_message: str | None = None,
     ):
         import os
-        api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("DASHSCOPE_API_KEY", "")
+        api_key = os.environ.get("DEEPSEEK_API_KEY", "")
         self.llm = create_deepseek_llm(api_key)
         self.tools = tools or []
         self.tool_map: dict[str, StructuredTool] = {t.name: t for t in self.tools}

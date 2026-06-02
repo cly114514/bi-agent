@@ -1,13 +1,32 @@
 from __future__ import annotations
 import os
-os.environ.setdefault("OPENAI_API_KEY", os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("DASHSCOPE_API_KEY", ""))
+import sys
+from pathlib import Path
+# 不管从哪个目录启动 streamlit, 都把本文件所在目录放到 sys.path 最前面,
+# 保证 `from utils.x import y` / `from agent.x import y` 始终能解析(项目无 __init__.py, 是 namespace package).
+_PROJECT_ROOT = Path(__file__).resolve().parent
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
+# 显式加载 repo 根目录的 .env(不依赖 streamlit 的 cwd)
+try:
+    from dotenv import load_dotenv
+    _ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
+    if _ENV_PATH.exists():
+        load_dotenv(_ENV_PATH, override=False)
+except ImportError:
+    pass
+
+os.environ.setdefault("OPENAI_API_KEY", os.environ.get("DEEPSEEK_API_KEY", ""))
 import json
 import re
+import uuid
 import streamlit as st
 from agent.react_agent import ReactAgent
 from agent.tools.agent_tools import set_schema, set_table_name
 from utils.excel_parser import parse_excel_bytes, format_schema_for_prompt
 from utils.mysql_handler import init_mysql, get_mysql
+from utils.chart_maker import render_chart
 from utils.config_handler import agent_conf
 
 st.set_page_config(page_title="BI Agent 看板智能体", layout="wide")
@@ -48,6 +67,7 @@ for key, default in [
     ("message", []), ("excel_parsed", None), ("excel_schema_text", ""),
     ("pending_clarify", None), ("table_imported", False), ("mysql_table", ""),
     ("query_results", {}), ("cached_file_bytes", None),
+    ("chart_selection", {}),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
@@ -151,6 +171,15 @@ def _cache_result(results: dict, msg_id: str, data: list):
     if len(results) > MAX_CACHED_RESULTS:
         oldest = next(iter(results))
         del results[oldest]
+        # 同步清理 chart_selection(若存在)
+        chart_sel = st.session_state.get("chart_selection")
+        if isinstance(chart_sel, dict):
+            chart_sel.pop(oldest, None)
+
+
+def _new_result_id() -> str:
+    """每次查询生成一个 uuid-based id, 避免上下文清空后 id 撞车."""
+    return f"result_{uuid.uuid4().hex[:8]}"
 
 
 def _extract_original_query(text: str) -> str:
@@ -168,97 +197,12 @@ def extract_sql_only(text: str) -> str:
     return text.strip()
 
 
-# ── 图表生成辅助函数 ──
-_CHART_KEYWORDS = {
-    "bar": ["柱状图", "条形图", "对比", "排行", "排名", "排序", "前几", "最高", "最低", "最多", "最少"],
-    "pie": ["饼图", "占比", "比例", "份额", "分布", "百分比"],
-    "line": ["趋势", "走势", "折线", "增长", "下降", "变化", "时间序列", "随时间"],
-}
-_AI_CHART_KEYWORDS = ["插图", "配图", "图示", "示意", "illustration", "生成图片"]
-
-
-def _should_show_chart_button(prompt: str, data: list) -> bool:
-    if not data or len(data) < 2:
-        return False
-    prompt_lower = prompt.lower()
-    # 如果用户明确要求图表，直接显示
-    for kw_list in _CHART_KEYWORDS.values():
-        for kw in kw_list:
-            if kw in prompt:
-                return True
-    for kw in _AI_CHART_KEYWORDS:
-        if kw in prompt_lower:
-            return True
-    # 数据行数适中且有数值列时默认提示
-    if 2 <= len(data) <= 50:
-        try:
-            cols = list(data[0].keys())
-            if len(cols) >= 2:
-                for row in data:
-                    float(row[cols[1]])
-                return True
-        except (ValueError, TypeError, KeyError):
-            pass
-    return False
-
-
-def _detect_chart_type(prompt: str) -> str:
-    prompt_lower = prompt.lower()
-    for kw in _AI_CHART_KEYWORDS:
-        if kw in prompt_lower:
-            return "ai"
-    for chart_type, kw_list in _CHART_KEYWORDS.items():
-        for kw in kw_list:
-            if kw in prompt:
-                return chart_type
-    # 默认柱状图
-    return "bar"
-
-
-def _safe_str(v) -> str:
-    if v is None:
-        return ""
-    s = str(v).strip()
-    return s if s else ""
-
-
-def _build_chart_caption(prompt: str, data: list) -> str:
-    if not data:
-        return prompt
-    try:
-        cols = list(data[0].keys())
-        label_col = cols[0]
-        value_col = cols[1] if len(cols) > 1 else cols[0]
-        labels = [_safe_str(row[label_col]) for row in data[:5]]
-        return f"根据\"{prompt}\"生成数据图表，展示{label_col}与{value_col}的关系，数据标签:{','.join(labels)}"
-    except Exception:
-        return prompt
-
-
-def _render_chart_button(prompt: str, data: list, msg_id: str):
-    chart_type = _detect_chart_type(prompt)
-    col1, col2 = st.columns([4, 1])
-    with col2:
-        if st.button("📊 生成图表", key=f"chart_btn_{msg_id}"):
-            if chart_type == "ai":
-                from utils.chart_maker import generate_ai_image
-                caption = _build_chart_caption(prompt, data)
-                with st.spinner("AI生成配图中..."):
-                    img_url = generate_ai_image(caption)
-                if img_url:
-                    st.image(img_url, use_container_width=True)
-                else:
-                    st.warning("AI图生成服务暂不可用，将使用数据图表代替")
-                    chart_type = "bar"
-            if chart_type != "ai":
-                from utils.chart_maker import render_data_chart
-                try:
-                    img_bytes = render_data_chart(data, chart_type, title=prompt)
-                    st.image(img_bytes, use_container_width=True)
-                except Exception as e:
-                    st.error(f"图表生成失败: {e}")
-    with col1:
-        st.caption(f"💡 可点击右侧「📊 生成图表」将数据可视化")
+# ── 图表渲染辅助 ──
+def _show_data_with_chart(prompt: str, data: list, msg_id: str, msg_text: str) -> None:
+    """统一入口: 输出助手消息文本 + 表格 + 图表(自动渲染, 无须点击)."""
+    st.chat_message("assistant").write(msg_text)
+    st.dataframe(data, use_container_width=True)
+    render_chart(data, msg_id, title=prompt)
 
 
 # ── 侧边栏：文件上传 + 导入MySQL ──
@@ -373,7 +317,10 @@ for msg in st.session_state["message"]:
     st.chat_message(role).write(content)
     result_id = msg.get("result_id", "")
     if result_id and result_id in st.session_state.get("query_results", {}):
-        st.dataframe(st.session_state["query_results"][result_id], use_container_width=True)
+        cached_data = st.session_state["query_results"][result_id]
+        st.dataframe(cached_data, use_container_width=True)
+        # 图表在每次 rerun/刷新时也重新渲染(原本只有表格会被重画)
+        render_chart(cached_data, result_id, title=content)
 
 # ── 未决澄清 ──
 pending = st.session_state.get("pending_clarify")
@@ -447,20 +394,47 @@ if not pending:
                 row_count = exec_result.get("row_count", 0)
                 data = exec_result.get("data", [])
                 msg = f"查询完成，返回 {row_count} 行数据"
-                msg_id = f"result_{len(st.session_state['message'])}"
+                msg_id = _new_result_id()
                 _cache_result(st.session_state["query_results"], msg_id, data)
-                st.chat_message("assistant").write(msg)
-                st.dataframe(data, use_container_width=True)
-                if _should_show_chart_button(prompt, data):
-                    _render_chart_button(prompt, data, msg_id)
+                _show_data_with_chart(prompt, data, msg_id, msg)
                 st.session_state["message"].append({
                     "role": "assistant", "content": msg, "result_id": msg_id,
                 })
             elif exec_result and exec_result.get("error"):
-                st.chat_message("assistant").error(exec_result["error"])
-                st.session_state["message"].append({
-                    "role": "assistant", "content": f"错误：{exec_result['error']}",
-                })
+                err_msg = exec_result["error"]
+                # MySQL 连不上时, 如果有 Excel 数据, 回退到 Excel 直查
+                mysql_down = (
+                    "MySQL未连接" in err_msg
+                    or "Connection refused" in err_msg
+                    or "Can't connect" in err_msg
+                    or "Access denied" in err_msg
+                    or "Unknown database" in err_msg
+                )
+                if mysql_down and st.session_state.get("excel_parsed"):
+                    from utils.excel_query import execute_excel_query
+                    excel_result = execute_excel_query(st.session_state["excel_parsed"], prompt)
+                    if excel_result.get("success"):
+                        data = excel_result.get("data", [])
+                        rc = excel_result.get("row_count", 0)
+                        msg = f"MySQL 不可用,已改用 Excel 直查,返回 {rc} 行数据"
+                        mid = _new_result_id()
+                        _cache_result(st.session_state["query_results"], mid, data)
+                        _show_data_with_chart(prompt, data, mid, msg)
+                        st.session_state["message"].append({
+                            "role": "assistant", "content": msg, "result_id": mid,
+                        })
+                    else:
+                        st.chat_message("assistant").write(
+                            f"无法执行查询: {excel_result.get('error', '未知')}"
+                        )
+                        st.session_state["message"].append({
+                            "role": "assistant", "content": f"错误: {err_msg}",
+                        })
+                else:
+                    st.chat_message("assistant").error(err_msg)
+                    st.session_state["message"].append({
+                        "role": "assistant", "content": f"错误：{err_msg}",
+                    })
             else:
                 content = strip_schema_content(full_response)
                 # 统一兜底：如果能从回复中提取到 SQL，直接执行并展示数据
@@ -478,12 +452,9 @@ if not pending:
                         data = result.get("data", [])
                         rc = result.get("row_count", 0)
                         msg = f"查询完成，返回 {rc} 行数据"
-                        mid = f"result_{len(st.session_state['message'])}"
+                        mid = _new_result_id()
                         _cache_result(st.session_state["query_results"], mid, data)
-                        st.chat_message("assistant").write(msg)
-                        st.dataframe(data, use_container_width=True)
-                        if _should_show_chart_button(prompt, data):
-                            _render_chart_button(prompt, data, mid)
+                        _show_data_with_chart(prompt, data, mid, msg)
                         st.session_state["message"].append({
                             "role": "assistant", "content": msg, "result_id": mid,
                         })
@@ -498,12 +469,9 @@ if not pending:
                         data = excel_result.get("data", [])
                         rc = excel_result.get("row_count", 0)
                         msg = f"查询完成，返回 {rc} 行数据"
-                        mid = f"result_{len(st.session_state['message'])}"
+                        mid = _new_result_id()
                         _cache_result(st.session_state["query_results"], mid, data)
-                        st.chat_message("assistant").write(msg)
-                        st.dataframe(data, use_container_width=True)
-                        if _should_show_chart_button(prompt, data):
-                            _render_chart_button(prompt, data, mid)
+                        _show_data_with_chart(prompt, data, mid, msg)
                         st.session_state["message"].append({
                             "role": "assistant", "content": msg, "result_id": mid,
                         })

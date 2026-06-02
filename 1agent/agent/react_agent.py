@@ -2,6 +2,15 @@ from agent.langchain_agent import create_agent, LangChainToolAgent
 from agent.tools.agent_tools import generate_sql, get_table_schema, execute_sql, execute_excel
 
 
+def _bootstrap_sys_path():
+    """当作为 `python -m agent.react_agent` 入口运行时, 确保 1agent/ 在 sys.path 上."""
+    import sys
+    from pathlib import Path
+    root = Path(__file__).resolve().parent.parent
+    if str(root) not in sys.path:
+        sys.path.insert(0, str(root))
+
+
 class ReactAgent:
     def __init__(self):
         self._agent = create_agent(
@@ -20,6 +29,7 @@ class ReactAgent:
 
 
 if __name__ == "__main__":
+    _bootstrap_sys_path()
     agent = ReactAgent()
     for chunk in agent.execute_stream("查询华东地区的销售总额"):
         print(chunk, end="", flush=True)
