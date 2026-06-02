@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Secrets & env
+.env
+.env.local
+.env.*.local
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# ChromaDB / RAG caches (auto-regenerated on first run)
+chroma_db/
+1agent/chroma_db/
+1agent/md5.text
+1agent/agent/chroma_db/
+
+# Claude Code local config
+.claude/settings.local.json
+
+# User-uploaded screenshots / artifacts
+picture/
+screenshots/
+artifacts/
