@@ -1,4 +1,14 @@
-external_data_path: data/external/records.csv
+llm:
+  # 默认模型: deepseek-chat (DeepSeek 官方公开模型, 工具调用稳定)
+  # 其他可选: deepseek-reasoner (R1, 支持 reasoning_content)
+  model: deepseek-chat
+  base_url: https://api.deepseek.com/v1
+  thinking_mode: enable
+
+embeddings:
+  # 检索用 embedding 模型. 默认使用中文友好开源模型.
+  # 也可设为 DashScope/OpenAI 等 langchain_community 支持的任意 embedding 类路径.
+  model: shibing624/text2vec-base-chinese
 
 mysql:
   host: 127.0.0.1
