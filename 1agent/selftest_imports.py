@@ -10,7 +10,7 @@ self-test: 验证项目所有入口文件的 import 依赖图在多个 cwd 下�
   3. 真正执行这些 import, 任何一个抛 ModuleNotFoundError / ImportError 就 fail
   4. 故意不调用入口文件里的业务代码(LLM / Streamlit 渲染), 只验证依赖图
 
-跑法: cd 1agent && python selftest.py
+跑法: cd 1agent && python selftest_imports.py
 """
 from __future__ import annotations
 
