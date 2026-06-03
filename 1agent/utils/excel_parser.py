@@ -1,4 +1,3 @@
-from __future__ import annotations
 import statistics
 import re
 from pathlib import Path
@@ -34,52 +33,8 @@ def _is_pure_number(s: str) -> bool:
 
 
 def _detect_dirty_values(values: list, col_name: str, dtype: str) -> list[str]:
-    dirty = set()
-    if not values:
-        return []
-    cleaned = [str(v).strip() for v in values if v is not None and str(v).strip()]
-
-    # 占位符/空值始终是脏数据
-    for v in cleaned:
-        if v.lower() in ("null", "n/a", "na", "无", "测试", "test"):
-            dirty.add(v)
-
-    # 字段语义检测
-    if _is_numeric_field(col_name):
-        for v in cleaned:
-            if not _is_pure_number(v):
-                dirty.add(v)
-            elif float(v) <= 0:
-                dirty.add(v)
-    if _is_date_field(col_name):
-        for v in cleaned:
-            if len(v) > 5 and not _DATE_PATTERN.match(v):
-                dirty.add(v)
-    if _is_bool_field(col_name):
-        for v in cleaned:
-            if v not in ("是", "否", "0", "1", "true", "false", "True", "False", "TRUE", "FALSE"):
-                dirty.add(v)
-
-    # 同列模式对比：检测不合群的异常值
-    if len(cleaned) >= 3:
-        # 统计列中各类字符模式的比例
-        chinese_count = sum(1 for v in cleaned if any('\u4e00' <= c <= '\u9fff' for c in v))
-        pure_digit_count = sum(1 for v in cleaned if v.isdigit())
-        alnum_count = sum(1 for v in cleaned if v.replace("-", "").isalnum() and not v.isdigit() and not any('\u4e00' <= c <= '\u9fff' for c in v))
-        total = len(cleaned)
-
-        # 如果 ≥70% 的值包含中文 → 纯数字值视为脏数据
-        if chinese_count / total >= 0.7:
-            for v in cleaned:
-                if v.isdigit() and len(v) >= 3:
-                    dirty.add(v)
-        # 如果 ≥70% 是纯数字 → 包含中文的值视为脏数据
-        elif pure_digit_count / total >= 0.7:
-            for v in cleaned:
-                if any('\u4e00' <= c <= '\u9fff' for c in v):
-                    dirty.add(v)
-
-    return sorted(dirty)
+    """当前版本不检测脏数据，假设数据已清洗"""
+    return []
 
 
 def _safe_str(v: Any) -> str | None:
@@ -149,8 +104,19 @@ def parse_excel_bytes(data: bytes, filename: str) -> dict:
             rows = [r for r in rows if not row_is_empty(r)]
             if not rows:
                 continue
-
             max_cols = max(len(r) for r in rows)
+            # Forward-fill：合并单元格导致的空白自动补全为上一行同列的值
+            for i in range(max_cols):
+                last_non_empty = None
+                for r_idx in range(len(rows)):
+                    if i < len(rows[r_idx]) and _safe_str(rows[r_idx][i]) is not None:
+                        last_non_empty = rows[r_idx][i]
+                    elif last_non_empty is not None:
+                        rows[r_idx] = list(rows[r_idx])
+                        while len(rows[r_idx]) <= i:
+                            rows[r_idx].append(None)
+                        rows[r_idx][i] = last_non_empty
+
             cols = [[] for _ in range(max_cols)]
             for r in rows:
                 for i in range(max_cols):

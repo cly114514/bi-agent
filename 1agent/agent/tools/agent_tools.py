@@ -5,13 +5,7 @@ from rag.rag_service import RagSummarizeService
 from utils.mysql_handler import get_mysql
 from utils.logger_handler import logger
 
-rag = None  # lazy init
-
-def _get_rag():
-    global rag
-    if rag is None:
-        rag = RagSummarizeService()
-    return rag
+rag = RagSummarizeService()
 _current_schema: dict = {}
 _current_table_name: str = ""
 
@@ -28,17 +22,7 @@ def set_table_name(name: str):
 
 @tool(description="生成SQL查询语句：根据用户需求和上传的Excel数据表字段，从向量库检索相似的SQL示例，生成精准的SQL查询语句")
 def generate_sql(query: str) -> str:
-    return _get_rag().rag_summarize(query)
-
-
-@tool(description="执行查询（无MySQL时直接查Excel数据）")
-def execute_excel(query: str) -> str:
-    """当MySQL不可用时，直接在上传的Excel数据上执行查询"""
-    if _current_schema and _current_schema.get("sheets"):
-        from utils.excel_query import execute_excel_query
-        result = execute_excel_query(_current_schema, query)
-        return json.dumps(result, ensure_ascii=False, default=str)
-    return json.dumps({"success": False, "error": "尚未上传Excel数据"})
+    return rag.rag_summarize(query)
 
 
 @tool(description="获取当前已上传数据表的字段结构信息，包含字段名、数据类型、所有唯一值和脏数据标记")
@@ -47,7 +31,8 @@ def get_table_schema() -> str:
         return "尚未上传数据表，请先上传Excel文件"
     lines = []
     for sheet in _current_schema.get("sheets", []):
-        lines.append(f"Sheet: {sheet['name']} ({sheet['rows']}行 x {sheet['columns']}列)")
+        table_label = sheet.get("_mysql_table", sheet['name'])
+        lines.append(f"表 {table_label} ({sheet['rows']}行 x {sheet['columns']}列)")
         headers = [h for h in sheet["column_headers"] if h]
         lines.append(f"字段: {', '.join(headers)}")
         for col_name, profile in sheet.get("column_profiles", {}).items():
@@ -69,24 +54,33 @@ def get_table_schema() -> str:
 def execute_sql(sql: str) -> str:
     # 自动替换 RAG 示例中的表名为实际 MySQL 表名
     example_tables = [
-        "contracts", "sales", "revenue", "orders", "users", "合同", "Sheet1",
-        "employees", "inventory", "tickets", "returns",
+        "contracts", "sales", "revenue", "orders", "users", "合同",
+        "sheet1", "Sheet1", "employees", "inventory", "tickets", "returns",
         "daily_orders", "ads", "monthly_target", "preorders",
         "user_retention", "logistics", "purchase_orders",
         "marketing_campaign", "projects", "equipment_logs",
         "budget_tracking", "user_login", "sales_compare",
         "profit_month", "user_activity", "stores",
     ]
-    actual_table = _current_table_name or (
-        _current_schema.get("sheets", [{}])[0].get("name", "") if _current_schema else ""
-    )
-    if actual_table:
-        # Validate table name (allow only safe chars)
-        import re as _re
-        if _re.match(r'^[\w\u4e00-\u9fff]+$', actual_table):
-            pattern = r'\b(?:' + '|'.join(example_tables) + r')\b'
-            sql = _re.sub(pattern, actual_table, sql, flags=_re.IGNORECASE)
+    # 自动替换 RAG 示例表名为实际的 MySQL 表名（修正 LLM 可能用的错误表名）
+    real_tables = [s.get("_mysql_table", s["name"]) for s in _current_schema.get("sheets", [])]
+    for example_tbl in example_tables:
+        if example_tbl.lower() in sql.lower():
+            if real_tables:
+                sql = re.sub(r'\b' + example_tbl + r'\b', real_tables[0], sql, flags=re.IGNORECASE)
+                break
 
+    # 自动为含特殊字符的表名加反引号
+    for rt in real_tables:
+        if not rt.startswith("`") and re.search(r'[\s()（）]', rt):
+            sql = re.sub(r'(?<![`\w])\s*' + re.escape(rt) + r'\s*(?![`\w])', f' `{rt}` ', sql)
+
+    # 自动修复 RAG 幻觉列名
+    all_real_cols = set()
+    for sheet in _current_schema.get("sheets", []):
+        for h in sheet.get("column_headers", []):
+            if h:
+                all_real_cols.add(h)
     # 自动替换 RAG 常见英文列名为实际中文列名
     col_map = {}
     for sheet in _current_schema.get("sheets", []):
@@ -112,20 +106,7 @@ def execute_sql(sql: str) -> str:
 
     # 自动注入脏数据过滤 WHERE 条件
     extra_conditions = []
-    for sheet in _current_schema.get("sheets", []):
-        for col_name, profile in sheet.get("column_profiles", {}).items():
-            dirty = profile.get("dirty_values", [])
-            if not dirty:
-                continue
-            col_ref = f"`{col_name}`"
-            str_dirty = [d for d in dirty if not (d.replace(".", "").replace("-", "").isdigit() or (d.startswith("-") and d[1:].replace(".", "").isdigit()))]
-            if str_dirty:
-                vals = ", ".join(f"'{d}'" for d in str_dirty[:10])
-                extra_conditions.append(f"{col_ref} NOT IN ({vals})")
-            num_dirty = [d for d in dirty if d not in str_dirty]
-            num_zeros = [d for d in num_dirty if d in ("0", "0.0", "0.00")]
-            if num_zeros:
-                extra_conditions.append(f"{col_ref} > 0")
+    # 脏数据检测已禁用，跳过
 
     logger.info(f"[execute_sql] 脏数据过滤: {extra_conditions if extra_conditions else '无'}")
 

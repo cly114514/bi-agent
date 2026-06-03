@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import pymysql
 import json
 import re
@@ -45,7 +43,8 @@ class MySQLHandler:
         conn.close()
 
     def create_table_from_excel(self, table_name: str, headers: list[str], sample_rows: list[list]) -> str:
-        safe_name = table_name.replace(" ", "_").replace("-", "_")[:64]
+        # 保留原始表名，反引号会自动处理特殊字符（空格、括号等）
+        safe_name = table_name[:64]
         conn = self._connect()
         cur = conn.cursor()
         cur.execute(f"DROP TABLE IF EXISTS `{safe_name}`")
@@ -82,15 +81,12 @@ class MySQLHandler:
         cols = ", ".join(safe_headers)
         sql = f"INSERT INTO `{safe_name}` ({cols}) VALUES ({placeholders})"
 
-        inserted = 0
         for row in rows:
             try:
                 cur.execute(sql, row)
-                inserted += 1
-            except Exception as e:
-                logger.warning(f"[MySQL] INSERT failed for row: {e}")
+            except Exception:
+                continue
         conn.commit()
-        logger.info(f"[MySQL] Inserted {inserted}/{len(rows)} rows into {safe_name}")
         conn.close()
 
     def execute_query(self, sql: str) -> dict:
