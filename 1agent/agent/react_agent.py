@@ -1,3 +1,12 @@
+"""Facade for the ReAct-style BI agent.
+
+Builds a :class:`LangChainToolAgent` with the four core tools. History
+management is the caller's responsibility (see ``app.py``'s
+``st.session_state["chat_history"]``) — the agent itself is stateless
+about prior turns, which avoids cross-session races.
+"""
+from __future__ import annotations
+
 from agent.langchain_agent import create_agent, LangChainToolAgent
 from agent.tools.agent_tools import generate_sql, get_table_schema, execute_sql, execute_excel
 
@@ -19,13 +28,18 @@ class ReactAgent:
                 "你是 BI 看板 SQL 引擎。"
                 "用户提问时，先调用 get_table_schema 查看表结构，"
                 "再调用 generate_sql 生成SQL，最后调用 execute_sql 执行。"
-                "如果MySQL未连接，调用 execute_excel 直接查询Excel数据。"
+                "如果 MySQL 未连接或用户明确要查 Excel，调 execute_excel 直接查询Excel数据。"
+                "多文件场景：先调 get_table_schema（不带 file_id）看目录；"
+                "若用户的需求只涉及一个文件，调 get_table_schema 时带 file_id 拿详细字段；"
+                "若用户不确定选哪个文件 → 输出 [CLARIFY] 让用户选。"
                 "重要：如果查询成功返回数据，返回 JSON 格式：{\"success\": true, \"data\": [...], \"row_count\": N}。"
             ),
         )
 
-    def execute_stream(self, query: str):
-        yield from self._agent.execute_stream(query)
+    def execute_stream(self, query: str, history: list[dict] | None = None):
+        """Run one turn. ``history`` is the prior chat history (capped by
+        the agent as a safety net)."""
+        yield from self._agent.execute_stream(query, history=history)
 
 
 if __name__ == "__main__":
