@@ -530,3 +530,20 @@ def worker2(): execute_sql.func("SELECT 2")
   - 浏览器端实际渲染表现（无 E2E 截图能力, 只能看图说话）
 
 > 本报告的 30 条 finding 中, **🔴 3 条是真安全漏洞** (#1, #4 是 SQL 相关; #5 的会话串扰是数据污染), **🟠 7 条是会让真实用户碰到的 bug**, 其余是代码质量和工程化问题。
+
+---
+
+## 7. 修复完成状态 (2026-06-03)
+
+所有 30 条 finding 已在 `feat/integrated-v2.2` 分支修复并 commit:
+
+| 阶段 | 范围 | commit |
+|---|---|---|
+| Phase 1: Security P0 | #1, #4, #14 | `fix+feat(agent_tools): sqlglot-based SQL rewrite + multi-file state` |
+| Phase 2: Correctness P0 | #2, #3, #6, #8, #12, #13 | 散见 4 个 fix+feat commit |
+| Phase 3: SQL 重构 | #5, #7, #21 | 同上 |
+| Phase 4: 配置 & UX | #9, #10, #11, #15, #16, #17, #18, #19, #22, #23, #27, #28, #29, #30 | 散见 6 个 commit |
+| Phase 5: 测试基建 | #20 | `chore: rename selftest.py → selftest_imports.py` |
+| Phase 6: 死代码清理 | #25, #26 | 2 个 chore commit |
+
+详见 `git log feat/integrated-v2.2..feat/chart-engine-plotly-v2.1` 的 14 个 commit。
