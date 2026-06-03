@@ -1,5 +1,6 @@
 import sys
 import os
+import json
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from langchain_chroma import Chroma
@@ -13,38 +14,49 @@ from utils.logger_handler import logger
 
 
 def _is_sql_examples_file(filepath: str) -> bool:
-    if not filepath.endswith(".txt"):
-        return False
+    """Detect the JSONL ``{"description": ..., "sql": ...}`` examples file.
+
+    #26: previously detected by colon-line ratio. New format is JSONL with
+    a leading ``{`` on every line; we sniff the first non-empty line.
+    """
     try:
         with open(filepath, "r", encoding="utf-8") as f:
-            lines = [l.strip() for l in f.readlines()[:5] if l.strip()]
-        if not lines:
-            return False
-        colon_lines = sum(1 for l in lines if ":" in l)
-        return colon_lines >= len(lines) * 0.5
+            for line in f:
+                s = line.strip()
+                if s:
+                    return s.startswith("{") and '"sql"' in s
+        return False
     except Exception:
         return False
 
 
 def _load_sql_knowledge(filepath: str) -> list[Document]:
-    docs = []
+    """Load a JSONL ``{"description": ..., "sql": ...}`` examples file.
+
+    #26: replaced the legacy ``split(":", 1)`` parser, which broke for any
+    SQL containing a ``:`` character. JSONL is unambiguous.
+    """
+    docs: list[Document] = []
     filename = os.path.basename(filepath)
     with open(filepath, "r", encoding="utf-8") as f:
-        for idx, line in enumerate(f):
+        for idx, line in enumerate(f, start=1):
             line = line.strip()
             if not line:
                 continue
-            if ":" in line:
-                description, sql = line.split(":", 1)
-                description = description.strip()
-                sql = sql.strip()
-            else:
-                description = line
-                sql = line
+            try:
+                obj = json.loads(line)
+            except json.JSONDecodeError as e:
+                logger.warning(f"[vector_store] {filename}:{idx} JSON 解析失败, 跳过: {e}")
+                continue
+            description = str(obj.get("description", "")).strip()
+            sql = str(obj.get("sql", "")).strip()
+            if not description or not sql:
+                logger.warning(f"[vector_store] {filename}:{idx} description/sql 为空, 跳过")
+                continue
             docs.append(Document(
                 page_content=description,
                 metadata={
-                    "source": f"{filename}_line_{idx + 1}",
+                    "source": f"{filename}_line_{idx}",
                     "sql": sql,
                     "file": filename,
                 },

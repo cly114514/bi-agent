@@ -1,0 +1,49 @@
+{"description": "查询华东地区销售额", "sql": "select sum(amount) from sales where region = '华东'"}
+{"description": "查询华南地区利润", "sql": "select sum(profit) from sales where region = '华南'"}
+{"description": "查询华北地区订单量", "sql": "select count(order_id) from orders where region = '华北'"}
+{"description": "查询西南地区客单价", "sql": "select avg(amount) from orders where region = '西南'"}
+{"description": "查询东北地区销售总额", "sql": "select sum(sales) from revenue where area = '东北'"}
+{"description": "查询华中地区退货率", "sql": "select (count(case when status='退货' then 1 end)*1.0/count(*)) from orders where region='华中'"}
+{"description": "查询2025年第一季度销售额", "sql": "select sum(amount) from sales where year=2025 and quarter=1"}
+{"description": "查询2025年6月用户增长数", "sql": "select count(user_id) from users where created_at between '2025-06-01' and '2025-06-30'"}
+{"description": "查询上个月利润环比增长率", "sql": "select (本月利润-上月利润)/上月利润 from profit_month order by month desc limit 1"}
+{"description": "查询产品A的库存数量", "sql": "select stock from inventory where product_name='产品A'"}
+{"description": "查询销售额前10的产品", "sql": "select product_name, sum(amount) as total from sales group by product_name order by total desc limit 10"}
+{"description": "查询最近7天每日活跃用户数", "sql": "select date, count(distinct user_id) as dau from user_activity where date >= date('now', '-7 day') group by date"}
+{"description": "查询各部门平均薪资", "sql": "select dept, avg(salary) from employees group by dept"}
+{"description": "查询2025年各月销售趋势", "sql": "select month, sum(amount) from sales where year=2025 group by month order by month"}
+{"description": "查询同比去年增长最快的产品", "sql": "select product, (今年销量-去年销量)/去年销量 as growth from sales_compare where growth > 0 order by growth desc limit 10"}
+{"description": "查询华东地区各城市销售额", "sql": "select city, sum(amount) from sales where region='华东' group by city"}
+{"description": "查询超过30天未登录的用户数", "sql": "select count(user_id) from users where last_login < date('now', '-30 day')"}
+{"description": "查询毛利率最高的3个产品类别", "sql": "select category, (sum(amount)-sum(cost))/sum(amount) as margin from sales group by category order by margin desc limit 3"}
+{"description": "查询2025年5月复购率", "sql": "select count(distinct user_id) from orders where user_id in (select user_id from orders where month=4) and month=5"}
+{"description": "查询客户生命周期价值前20%的用户", "sql": "select user_id, sum(amount) as ltv from orders group by user_id order by ltv desc limit (select count(*)*0.2 from users)"}
+{"description": "查询今日实时订单量", "sql": "select count(*) from orders where date = current_date"}
+{"description": "查询每平方英尺销售额最高的门店", "sql": "select store_id, sum(amount)/area as sales_per_sqft from stores join sales on stores.id=sales.store_id group by store_id order by sales_per_sqft desc"}
+{"description": "查询新用户首单平均金额", "sql": "select avg(first_order_amount) from (select user_id, min(amount) as first_order_amount from orders group by user_id) t"}
+{"description": "查询周末与工作日平均订单数差异", "sql": "select avg(case when dayofweek in (1,7) then orders else null end) as weekend, avg(case when dayofweek between 2 and 6 then orders else null end) as weekday from daily_orders"}
+{"description": "查询2025年H1各产品线收入占比", "sql": "select product_line, sum(revenue)*100.0/(select sum(revenue) from sales where half=1) as percent from sales where half=1 group by product_line"}
+{"description": "查询库存周转率最低的5个SKU", "sql": "select sku, sum(sold)/avg(stock) as turnover from inventory group by sku order by turnover limit 5"}
+{"description": "查询广告点击率最高的3个渠道", "sql": "select channel, sum(clicks)/sum(impressions) as ctr from ads group by channel order by ctr desc limit 3"}
+{"description": "查询连续3个月销售额增长的地区", "sql": "select region from (select region, month, amount, lag(amount) over(partition by region order by month) as prev from sales) t where amount>prev group by region having count(*)=3"}
+{"description": "查询客服响应时长低于平均水平的工单占比", "sql": "select count(*)*100.0/(select count(*) from tickets) from tickets where response_time < (select avg(response_time) from tickets)"}
+{"description": "查询退货原因Top5", "sql": "select reason, count(*) as cnt from returns group by reason order by cnt desc limit 5"}
+{"description": "查询未付款超过24小时的订单数", "sql": "select count(*) from orders where status='待付款' and created_at < datetime('now', '-1 day')"}
+{"description": "查询VIP用户平均客单价", "sql": "select avg(amount) from orders where user_level='VIP'"}
+{"description": "查询每月新注册用户带来的销售额", "sql": "select u.month, sum(o.amount) from users u join orders o on u.user_id=o.user_id where u.created_month=o.month group by u.month"}
+{"description": "查询库存金额最高的品类", "sql": "select category, sum(stock*unit_price) as stock_value from inventory group by category order by stock_value desc"}
+{"description": "查询2025年销售额超过1000万的销售员名单", "sql": "select salesperson, sum(amount) from sales where year=2025 group by salesperson having sum(amount)>10000000"}
+{"description": "查询预购订单转化率", "sql": "select (count(case when status='已支付' then 1 end)*1.0/count(*)) from preorders"}
+{"description": "查询APP端与PC端用户留存率差异", "sql": "select platform, avg(retention_30d) from user_retention group by platform"}
+{"description": "查询物流平均配送时长最长的区域", "sql": "select region, avg(delivery_days) from logistics group by region order by avg(delivery_days) desc limit 1"}
+{"description": "查询供应商准时交货率", "sql": "select supplier, count(case when on_time=true then 1 end)*100.0/count(*) as on_time_rate from purchase_orders group by supplier"}
+{"description": "查询营销活动ROI最高的3个活动", "sql": "select campaign, (revenue - cost) / cost as roi from marketing_campaign order by roi desc limit 3"}
+{"description": "查询销售额完成率低于80%的月份", "sql": "select month, actual_sales / target_sales as completion_rate from monthly_target where completion_rate < 0.8"}
+{"description": "查询每位销售代表的季度业绩排名", "sql": "select sales_rep, quarter, sum(amount), rank() over(partition by quarter order by sum(amount) desc) as r from sales group by sales_rep, quarter"}
+{"description": "查询项目进度滞后超过10天的项目名称", "sql": "select project_name, planned_end_date, actual_end_date, julianday(actual_end_date) - julianday(planned_end_date) as delay from projects where delay > 10"}
+{"description": "查询设备平均无故障时间的趋势", "sql": "select month, avg(mtbf) as avg_mtbf from equipment_logs group by month order by month"}
+{"description": "查询预算执行偏差最大的部门", "sql": "select dept, (actual_spent - budget) as variance from budget_tracking order by abs(variance) desc limit 5"}
+{"description": "查询用户连续活跃天数排行", "sql": "select user_id, count(*) as consecutive_days from (select user_id, date, date - row_number() over(partition by user_id order by date) as grp from user_login) t group by user_id, grp having consecutive_days >= 3 order by consecutive_days desc"}
+{"description": "查询昨日新增用户中完成首单的比例", "sql": "select count(case when first_order_date = register_date then 1 end)*1.0/count(*) as conversion_rate from users where register_date = current_date - 1"}
+{"description": "查询各产品线的毛利率同比变化百分比", "sql": "select product_line, (current_year_margin - last_year_margin) / last_year_margin as margin_change from (select product_line, sum(profit)/sum(revenue) as margin, year from sales group by product_line, year) pivot"}
+{"description": "查询客服满意度评分低于平均分的工单类别", "sql": "select category, count(*) as low_score_count from tickets where satisfaction_score < (select avg(satisfaction_score) from tickets) group by category order by low_score_count desc"}
