@@ -18,6 +18,8 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Callable, Optional
 
+from utils.type_inference import is_numeric_column, NUMERIC_THRESHOLD
+
 # ── 可选依赖: plotly / pandas ─────────────────────────────────────
 try:
     import plotly.graph_objects as go
@@ -144,17 +146,9 @@ def _is_date_like(name: str, values: list) -> bool:
 
 
 def _is_numeric(values: list) -> bool:
-    if not values:
-        return False
-    # 提到 95%: 一个 1000 行的列只要有 50 行非数字, 就归类为字符串列, 避免脏数据污染整张图
-    hits = 0
-    for v in values:
-        try:
-            float(v)
-            hits += 1
-        except (TypeError, ValueError):
-            pass
-    return hits >= 0.95 * len(values)
+    """#21: delegate to the shared threshold so the chart engine and the
+    Excel parser agree on what counts as a numeric column."""
+    return is_numeric_column(values, threshold=NUMERIC_THRESHOLD)
 
 
 def _all_non_negative(values: list) -> bool:
@@ -305,10 +299,15 @@ def _aggregate_time_series(
     x_col: str,
     numeric_cols: list[str],
     bucket: str,
-) -> list[dict]:
-    """按时间桶聚合, 对数值列求和. 保留所有原始非数值列(取该桶内的第一个值)."""
+) -> tuple[list[dict], dict]:
+    """按时间桶聚合, 对数值列求和. 保留所有原始非数值列(将该桶内的
+    不同取值用 ``、`` 拼接, #27).
+
+    Returns (rows, meta) where ``meta`` reports the count of dirty cells
+    that were silently coerced to NaN during ``pd.to_numeric`` (#28).
+    """
     if not _HAS_PANDAS or not data:
-        return data
+        return data, {"dropped_cells": 0, "dropped_pct": 0.0}
     rows = []
     for r in data:
         v = r.get(x_col)
@@ -317,7 +316,7 @@ def _aggregate_time_series(
             continue
         rows.append({"_ts": ts, **{k: r.get(k) for k in r.keys() if k != x_col}})
     if not rows:
-        return []
+        return [], {"dropped_cells": 0, "dropped_pct": 0.0}
     df = pd.DataFrame(rows)
     # pandas 不同版本 period 频率名不同: 老版 M/Q/Y, 新版 ME/QE/YE
     # 用 Grouper + 显式 freq 字符串, 兼容两种
@@ -334,13 +333,27 @@ def _aggregate_time_series(
     freq = freq_map[bucket]
     # 用 Grouper 避开 to_period 的版本差异
     # 先把数值列硬转成数字 (坏 cell -> NaN), 这样 groupby sum 不会因为一个脏 cell 整列挂掉
+    dropped_cells = 0
     for c in numeric_cols:
         if c in df.columns:
+            before = df[c].notna().sum()
             df[c] = pd.to_numeric(df[c], errors="coerce")
+            after = df[c].notna().sum()
+            dropped_cells += max(0, before - after)
+    total_numeric_cells = max(1, len(df) * max(1, len(numeric_cols)))
+    dropped_pct = round(100.0 * dropped_cells / total_numeric_cells, 2)
     agg_map = {c: "sum" for c in numeric_cols if c in df.columns}
     non_numeric = [c for c in df.columns if c not in agg_map and c != "_ts"]
+
+    def _join_unique(series):
+        # #27: join all unique non-null values with '、' instead of taking
+        # only the first. A time bucket with [A, B, A] now reads as
+        # "A、B" rather than "A" (which used to silently lose the B row).
+        vals = sorted({str(v) for v in series if v is not None and str(v).strip() != ""})
+        return "、".join(vals) if vals else None
+
     if non_numeric:
-        agg_map.update({c: "first" for c in non_numeric})
+        agg_map.update({c: _join_unique for c in non_numeric})
     grouped = df.groupby(pd.Grouper(key="_ts", freq=freq)).agg(agg_map).reset_index()
     grouped = grouped.rename(columns={"_ts": x_col})
     # 把 x_col 改回普通 timestamp(去掉 freq 信息), 便于 plotly 解析
@@ -354,7 +367,7 @@ def _aggregate_time_series(
         for c in non_numeric:
             rec[c] = row[c]
         out.append(rec)
-    return out
+    return out, {"dropped_cells": int(dropped_cells), "dropped_pct": dropped_pct}
 
 
 def _should_aggregate(shape: ShapeInfo, agg_mode: str) -> bool:
@@ -674,13 +687,17 @@ def build_figure(
     if x_col in shape.date_cols and _should_aggregate(shape, view.agg_mode):
         bucket = _pick_time_bucket(_safe_values(work, x_col))
         n_before = len(work)
-        work = _aggregate_time_series(
+        work, agg_meta = _aggregate_time_series(
             work, x_col,
             [c for c in (view.selected_cols or shape.numeric_cols)],
             bucket,
         )
         meta.update({"aggregated": True, "bucket": bucket,
-                     "original_rows": n_before, "buckets": len(work)})
+                     "original_rows": n_before, "buckets": len(work),
+                     # #28: surface how many cells got coerced to NaN
+                     # so the UI can warn the user about lost rows.
+                     "dropped_cells": agg_meta.get("dropped_cells", 0),
+                     "dropped_pct": agg_meta.get("dropped_pct", 0.0)})
     elif option.id == "single_bar" and shape.n_unique_per_col.get(x_col, 0) > 200:
         work = _cap_categorical_x(work, x_col, list(shape.numeric_cols), cap=200)
     elif option.id in ("grouped_bar", "multi_line") and not (x_col in shape.date_cols):
@@ -854,9 +871,16 @@ def render_chart(
 
     # 提示聚合信息
     if meta.get("aggregated"):
+        # #28: surface dirty cells the aggregation dropped so the user
+        # knows their data wasn't silently corrupted.
+        dropped_msg = ""
+        dropped = meta.get("dropped_cells", 0)
+        if dropped and dropped > 0:
+            pct = meta.get("dropped_pct", 0.0)
+            dropped_msg = f"  |  ⚠️ 已排除 {dropped} 个无法解析的脏值({pct}%)"
         st.caption(
             f"📦 已按 **{meta['bucket']}** 聚合: {meta['original_rows']} 行 → {meta['buckets']} 个桶. "
-            f"切到「原始」看明细"
+            f"切到「原始」看明细{dropped_msg}"
         )
 
     st.plotly_chart(

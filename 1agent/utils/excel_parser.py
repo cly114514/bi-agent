@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
+from utils.type_inference import infer_dtype, is_numeric_column
 
 
 _NUMERIC_FIELD_KEYWORDS = ["金额", "价格", "数量", "收入", "成本", "利润", "单价", "总额", "费用", "薪资"]
@@ -90,18 +91,12 @@ def _safe_str(v: Any) -> str | None:
 
 
 def _infer_dtype(samples: list) -> str:
-    numeric = 0
-    for s in samples:
-        if s is None:
-            continue
-        try:
-            float(s)
-            numeric += 1
-        except (ValueError, TypeError):
-            pass
-    if numeric > len(samples) * 0.7:
-        return "numeric"
-    return "string"
+    """Classify a list of samples as ``"numeric"`` or ``"string"``.
+
+    #21: now delegates to ``utils.type_inference`` so the threshold is
+    consistent with the chart engine (95%, not 70%).
+    """
+    return infer_dtype(samples)
 
 
 def _column_profile(values: list, col_name: str = "") -> dict:
