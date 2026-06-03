@@ -48,3 +48,20 @@ chroma_db/
 picture/
 screenshots/
 artifacts/
+
+# Excel files: block accidental "Upload files via web" commits to repo
+# root (the team's GitHub web uploader anti-pattern). Test samples live
+# under 1agent/data/test_samples/ and are explicitly whitelisted below.
+*.xlsx
+*.xls
+*.xlsm
+!1agent/data/test_samples/*.xlsx
+!1agent/data/test_samples/*.xls
+!1agent/data/test_samples/*.xlsm
+
+# Block random SQL dumps / CSV files dropped at the repo root by mistake
+# (legitimate samples live under 1agent/data/).
+/*.sql
+/*.csv
+/*.db
+/*.sqlite3
