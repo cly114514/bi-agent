@@ -1,3 +1,6 @@
+import os
+os.environ.setdefault("OPENAI_API_KEY", os.environ.get("DEEPSEEK_API_KEY") or "")
+
 import json
 import re
 import streamlit as st
@@ -5,6 +8,7 @@ from agent.react_agent import ReactAgent
 from agent.tools.agent_tools import set_schema, set_table_name
 from utils.excel_parser import parse_excel_bytes, format_schema_for_prompt
 from utils.mysql_handler import init_mysql, get_mysql
+from utils.chart_maker import render_chart
 from utils.config_handler import agent_conf
 
 st.set_page_config(page_title="BI Agent 看板智能体", layout="wide")
@@ -45,10 +49,33 @@ for key, default in [
     ("message", []), ("excel_parsed", None), ("excel_parsed_list", []),
     ("excel_schema_text", ""),
     ("pending_clarify", None), ("table_imported", False), ("mysql_table", ""),
-    ("query_results", {}),
+    ("query_results", {}), ("chart_state", {}),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
+
+# Limit query_results to prevent memory growth
+MAX_CACHED_RESULTS = 50
+
+
+def _cache_result(results: dict, msg_id: str, data: list):
+    results[msg_id] = data
+    if len(results) > MAX_CACHED_RESULTS:
+        oldest = next(iter(results))
+        del results[oldest]
+        for key in ("chart_state", "chart_selection"):
+            store = st.session_state.get(key)
+            if isinstance(store, dict):
+                store.pop(oldest, None)
+
+
+def _show_data_with_chart(prompt: str, data: list, msg_id: str, msg_text: str) -> None:
+    """渲染一次查询结果: 助手文字 + dataframe + Plotly 图表(同一次 st.write)."""
+    st.chat_message("assistant").write(msg_text)
+    clean = [{k: ("" if v is None else v) for k, v in row.items()} for row in data]
+    st.dataframe(clean, use_container_width=True)
+    render_chart(data, msg_id, title=prompt)
+
 
 # ── 辅助函数 ──
 CLARIFY_PATTERN = re.compile(r"\[CLARIFY\]\s*(.*?)\s*\[/CLARIFY\]", re.DOTALL)
@@ -309,6 +336,7 @@ for msg in st.session_state["message"]:
         raw = st.session_state["query_results"][result_id]
         clean = [{k: ("" if v is None else v) for k, v in row.items()} for row in raw]
         st.dataframe(clean, use_container_width=True)
+        render_chart(raw, result_id, title=content)
 
 # ── 未决澄清 ──
 pending = st.session_state.get("pending_clarify")
@@ -385,10 +413,8 @@ if not pending:
                 data = exec_result.get("data", [])
                 msg = f"查询完成，返回 {row_count} 行数据"
                 msg_id = f"result_{len(st.session_state['message'])}"
-                st.session_state["query_results"][msg_id] = data
-                st.chat_message("assistant").write(msg)
-                clean = [{k: ("" if v is None else v) for k, v in row.items()} for row in data]
-                st.dataframe(clean, use_container_width=True)
+                _cache_result(st.session_state["query_results"], msg_id, data)
+                _show_data_with_chart(prompt, data, msg_id, msg)
                 st.session_state["message"].append({
                     "role": "assistant", "content": msg, "result_id": msg_id,
                 })
@@ -415,13 +441,11 @@ if not pending:
                         rc = result.get("row_count", 0)
                         msg = f"查询完成，返回 {rc} 行数据"
                         mid = f"result_{len(st.session_state['message'])}"
-                        st.session_state["query_results"][mid] = data
+                        _cache_result(st.session_state["query_results"], mid, data)
                         st.session_state["agent"].set_last_result_summary(
                             data[0].keys() if data else [], rc, data[:3]
                         )
-                        st.chat_message("assistant").write(msg)
-                        clean = [{k: ("" if v is None else v) for k, v in row.items()} for row in data]
-                        st.dataframe(clean, use_container_width=True)
+                        _show_data_with_chart(prompt, data, mid, msg)
                         st.session_state["message"].append({
                             "role": "assistant", "content": msg, "result_id": mid,
                         })

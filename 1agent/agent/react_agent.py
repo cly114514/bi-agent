@@ -1,7 +1,7 @@
 from langchain.agents import create_agent
 from model.factory import chat_model
 from utils.prompt_loader import load_system_prompts
-from agent.tools.agent_tools import generate_sql, get_table_schema, execute_sql
+from agent.tools.agent_tools import generate_sql, get_table_schema, execute_sql, execute_excel
 from agent.tools.middleware import monitor_tool, log_before_model
 
 
@@ -10,7 +10,7 @@ class ReactAgent:
         self.agent = create_agent(
             model=chat_model,
             system_prompt=load_system_prompts(),
-            tools=[generate_sql, get_table_schema, execute_sql],
+            tools=[generate_sql, get_table_schema, execute_sql, execute_excel],
             middleware=[monitor_tool, log_before_model],
         )
         self.max_history = 20
