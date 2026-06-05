@@ -1,0 +1,148 @@
+2026-05-30 20:51:30,402 - agent - INFO - mysql_handler.py:120 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-30 20:51:43,809 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-30 20:51:45,139 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-30 20:51:45,140 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-30 20:51:45,141 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-30 20:51:45,142 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-30 20:52:08,839 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-30 20:52:10,061 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-30 20:52:10,062 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-30 20:52:10,063 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-30 20:52:10,065 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-30 20:52:11,872 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-30 20:52:11,872 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询前十个合同，即会计科目字段的前10个值'}
+2026-05-30 20:52:13,718 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-30 20:52:13,720 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-30 20:53:26,556 - agent - INFO - agent_tools.py:111 - [execute_sql] 脏数据过滤: ['`预算金额` > 0', "`审批状态` NOT IN ('N/A')"]
+2026-05-30 20:53:26,557 - agent - INFO - agent_tools.py:125 - [execute_sql] 注入后SQL: SELECT 会计科目 FROM `财务明细` WHERE 会计科目 != '其他' AND 预算金额 != 0 AND 实际金额 NOT IN (-103602.63, -104952.43, -123897.97, -18484.23, -29683, -38083.59, -4135.88, -58809.13, -59620.78, -63867.95, -75713.23, -76458
+2026-05-30 20:53:26,607 - agent - INFO - agent_tools.py:140 - [execute_sql] 执行SQL返回 0 行
+2026-05-30 20:57:09,131 - agent - INFO - mysql_handler.py:120 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-30 20:57:32,337 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-30 20:57:33,464 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-30 20:57:33,464 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-30 20:57:33,465 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-30 20:57:33,466 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-30 20:57:34,728 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-30 20:57:34,728 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询差异金额最高的部门'}
+2026-05-30 20:57:37,169 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-30 20:57:37,170 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-30 20:57:43,510 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: execute_sql
+2026-05-30 20:57:43,510 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'sql': "SELECT 部门 FROM 财务明细 WHERE 审批状态 != 'N/A' ORDER BY 差异金额 DESC LIMIT 1"}
+2026-05-30 20:57:43,511 - agent - INFO - agent_tools.py:111 - [execute_sql] 脏数据过滤: ["`审批状态` NOT IN ('N/A')"]
+2026-05-30 20:57:43,511 - agent - INFO - agent_tools.py:125 - [execute_sql] 注入后SQL: SELECT 部门 FROM 财务明细 WHERE 审批状态 != 'N/A'  AND `审批状态` NOT IN ('N/A') ORDER BY 差异金额 DESC LIMIT 1
+2026-05-30 20:57:43,545 - agent - INFO - agent_tools.py:140 - [execute_sql] 执行SQL返回 1 行
+2026-05-30 20:57:43,545 - agent - INFO - middleware.py:26 - [tool monitor] 工具 execute_sql 调用成功
+2026-05-30 20:57:43,547 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-30 21:01:28,236 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-30 21:01:29,779 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-30 21:01:29,779 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-30 21:01:29,780 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-30 21:01:29,781 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-30 21:01:31,454 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-30 21:01:31,454 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询耗钱最高的会计科目，按实际金额降序排列，取第1个'}
+2026-05-30 21:01:33,424 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-30 21:01:33,426 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-30 21:01:39,744 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: execute_sql
+2026-05-30 21:01:39,744 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'sql': "SELECT 会计科目, SUM(实际金额) AS total_amount FROM 财务明细 WHERE 审批状态 != 'N/A' GROUP BY 会计科目 ORDER BY total_amount DESC LIMIT 1"}
+2026-05-30 21:01:39,745 - agent - INFO - agent_tools.py:111 - [execute_sql] 脏数据过滤: ["`审批状态` NOT IN ('N/A')"]
+2026-05-30 21:01:39,745 - agent - INFO - agent_tools.py:125 - [execute_sql] 注入后SQL: SELECT 会计科目, SUM(实际金额) AS total_amount FROM 财务明细 WHERE 审批状态 != 'N/A'  AND `审批状态` NOT IN ('N/A') GROUP BY 会计科目 ORDER BY total_amount DESC LIMIT 1
+2026-05-30 21:01:39,794 - agent - INFO - agent_tools.py:140 - [execute_sql] 执行SQL返回 1 行
+2026-05-30 21:01:39,794 - agent - INFO - middleware.py:26 - [tool monitor] 工具 execute_sql 调用成功
+2026-05-30 21:01:39,795 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-30 21:04:54,472 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-30 21:08:20,381 - agent - INFO - mysql_handler.py:120 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-30 21:08:44,100 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-30 21:08:46,805 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-30 21:08:46,805 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-30 21:08:46,806 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-30 21:08:46,807 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-30 21:09:12,031 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-30 21:09:16,139 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-30 21:09:16,139 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-30 21:09:16,140 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-30 21:09:16,142 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-30 21:09:20,681 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-30 21:09:20,681 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '按部门分组，查询差异金额总和最高的部门，列出部门名称和差异金额总和'}
+2026-05-30 21:09:27,017 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-30 21:09:27,019 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-30 21:09:33,148 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: execute_sql
+2026-05-30 21:09:33,148 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'sql': "SELECT 部门, SUM(差异金额) AS 差异金额总和 FROM 财务明细 WHERE 审批状态 != 'N/A' GROUP BY 部门 ORDER BY 差异金额总和 DESC LIMIT 1"}
+2026-05-30 21:09:33,149 - agent - INFO - agent_tools.py:111 - [execute_sql] 脏数据过滤: ["`审批状态` NOT IN ('N/A')"]
+2026-05-30 21:09:33,150 - agent - INFO - agent_tools.py:125 - [execute_sql] 注入后SQL: SELECT 部门, SUM(差异金额) AS 差异金额总和 FROM 财务明细 WHERE 审批状态 != 'N/A'  AND `审批状态` NOT IN ('N/A') GROUP BY 部门 ORDER BY 差异金额总和 DESC LIMIT 1
+2026-05-30 21:09:33,187 - agent - INFO - agent_tools.py:140 - [execute_sql] 执行SQL返回 1 行
+2026-05-30 21:09:33,188 - agent - INFO - middleware.py:26 - [tool monitor] 工具 execute_sql 调用成功
+2026-05-30 21:09:33,189 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-30 21:13:20,558 - agent - INFO - mysql_handler.py:120 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-30 21:14:00,339 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-30 21:14:02,888 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-30 21:14:02,889 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-30 21:14:02,890 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-30 21:14:02,892 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-30 21:14:08,914 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-30 21:14:08,914 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询差异金额总和最高的部门，并输出总和'}
+2026-05-30 21:14:35,026 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-30 21:14:35,028 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-30 21:14:40,985 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: execute_sql
+2026-05-30 21:14:40,985 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'sql': "SELECT 部门, SUM(差异金额) AS 差异总和 FROM 财务明细 WHERE 审批状态 != 'N/A' GROUP BY 部门 ORDER BY 差异总和 DESC LIMIT 1"}
+2026-05-30 21:14:40,989 - agent - INFO - agent_tools.py:111 - [execute_sql] 脏数据过滤: ["`审批状态` NOT IN ('N/A')"]
+2026-05-30 21:14:40,989 - agent - INFO - agent_tools.py:125 - [execute_sql] 注入后SQL: SELECT 部门, SUM(差异金额) AS 差异总和 FROM 财务明细 WHERE 审批状态 != 'N/A'  AND `审批状态` NOT IN ('N/A') GROUP BY 部门 ORDER BY 差异总和 DESC LIMIT 1
+2026-05-30 21:14:41,056 - agent - INFO - agent_tools.py:140 - [execute_sql] 执行SQL返回 1 行
+2026-05-30 21:14:41,057 - agent - INFO - middleware.py:26 - [tool monitor] 工具 execute_sql 调用成功
+2026-05-30 21:14:41,059 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-30 21:16:12,124 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-30 21:16:16,461 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-30 21:16:16,462 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-30 21:16:16,463 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-30 21:16:16,465 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-30 21:16:22,546 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-30 21:16:22,550 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询已被批准差异金额总和最高的部门，并输出总和'}
+2026-05-30 21:16:29,377 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-30 21:16:29,379 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-30 21:16:35,412 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: execute_sql
+2026-05-30 21:16:35,412 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'sql': "SELECT 部门, SUM(差异金额) AS 差异金额总和 FROM 财务明细 WHERE 审批状态 = '已批准' AND 审批状态 != 'N/A' GROUP BY 部门 ORDER BY 差异金额总和 DESC LIMIT 1"}
+2026-05-30 21:16:35,413 - agent - INFO - agent_tools.py:111 - [execute_sql] 脏数据过滤: ["`审批状态` NOT IN ('N/A')"]
+2026-05-30 21:16:35,413 - agent - INFO - agent_tools.py:125 - [execute_sql] 注入后SQL: SELECT 部门, SUM(差异金额) AS 差异金额总和 FROM 财务明细 WHERE 审批状态 = '已批准' AND 审批状态 != 'N/A'  AND `审批状态` NOT IN ('N/A') GROUP BY 部门 ORDER BY 差异金额总和 DESC LIMIT 1
+2026-05-30 21:16:35,475 - agent - INFO - agent_tools.py:140 - [execute_sql] 执行SQL返回 1 行
+2026-05-30 21:16:35,476 - agent - INFO - middleware.py:26 - [tool monitor] 工具 execute_sql 调用成功
+2026-05-30 21:16:35,477 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-30 21:26:03,739 - agent - INFO - mysql_handler.py:120 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-30 21:26:17,689 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-30 21:26:19,810 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-30 21:26:19,810 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-30 21:26:19,811 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-30 21:26:19,813 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-30 21:26:24,974 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-30 21:26:24,975 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询差异金额总和最高的部门'}
+2026-05-30 21:26:37,002 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-30 21:26:37,004 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-30 21:26:45,095 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: execute_sql
+2026-05-30 21:26:45,095 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'sql': "SELECT 部门, SUM(差异金额) AS 差异金额总和 FROM 财务明细 WHERE 审批状态 != 'N/A' GROUP BY 部门 ORDER BY 差异金额总和 DESC LIMIT 1"}
+2026-05-30 21:26:45,096 - agent - INFO - agent_tools.py:115 - [execute_sql] 脏数据过滤: ["`审批状态` NOT IN ('N/A')"]
+2026-05-30 21:26:45,096 - agent - INFO - agent_tools.py:129 - [execute_sql] 注入后SQL: SELECT 部门, SUM(差异金额) AS 差异金额总和 FROM 财务明细 WHERE 审批状态 != 'N/A'  AND `审批状态` NOT IN ('N/A') GROUP BY 部门 ORDER BY 差异金额总和 DESC LIMIT 1
+2026-05-30 21:26:45,155 - agent - INFO - agent_tools.py:144 - [execute_sql] 执行SQL返回 1 行
+2026-05-30 21:26:45,155 - agent - INFO - middleware.py:26 - [tool monitor] 工具 execute_sql 调用成功
+2026-05-30 21:26:45,156 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-05-30 21:26:50,845 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: execute_sql
+2026-05-30 21:26:50,846 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'sql': "SELECT 部门, SUM(差异金额) AS 差异金额总和 FROM 财务明细 WHERE 审批状态 != 'N/A' AND 部门 IS NOT NULL AND 部门 != '' GROUP BY 部门 ORDER BY 差异金额总和 DESC LIMIT 1"}
+2026-05-30 21:26:50,847 - agent - INFO - agent_tools.py:115 - [execute_sql] 脏数据过滤: ["`审批状态` NOT IN ('N/A')"]
+2026-05-30 21:26:50,847 - agent - INFO - agent_tools.py:129 - [execute_sql] 注入后SQL: SELECT 部门, SUM(差异金额) AS 差异金额总和 FROM 财务明细 WHERE 审批状态 != 'N/A' AND 部门 IS NOT NULL AND 部门 != ''  AND `审批状态` NOT IN ('N/A') GROUP BY 部门 ORDER BY 差异金额总和 DESC LIMIT 1
+2026-05-30 21:26:50,885 - agent - INFO - agent_tools.py:144 - [execute_sql] 执行SQL返回 1 行
+2026-05-30 21:26:50,886 - agent - INFO - middleware.py:26 - [tool monitor] 工具 execute_sql 调用成功
+2026-05-30 21:26:50,887 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 9 条消息。
+2026-05-30 21:29:51,616 - agent - INFO - mysql_handler.py:120 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-05-30 21:30:05,179 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-05-30 21:30:08,226 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-05-30 21:30:08,226 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-05-30 21:30:08,227 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-05-30 21:30:08,229 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-05-30 21:30:17,492 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-05-30 21:30:17,493 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询差异金额最高的部门'}
+2026-05-30 21:30:25,952 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-05-30 21:30:25,955 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-05-30 21:30:47,849 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: execute_sql
+2026-05-30 21:30:47,849 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'sql': "SELECT 部门, SUM(差异金额) AS 总差异金额 FROM 财务明细 WHERE 审批状态 NOT IN ('N/A', '未知') AND 实际金额 >= 0 GROUP BY 部门 ORDER BY SUM(差异金额) DESC LIMIT 1"}
+2026-05-30 21:30:47,850 - agent - INFO - agent_tools.py:115 - [execute_sql] 脏数据过滤: ["`实际金额` NOT IN ('实际金额')", "`差异金额` NOT IN ('差异金额')", "`审批状态` NOT IN ('N/A')"]
+2026-05-30 21:30:47,850 - agent - INFO - agent_tools.py:129 - [execute_sql] 注入后SQL: SELECT 部门, SUM(差异金额) AS 总差异金额 FROM 财务明细 WHERE 审批状态 NOT IN ('N/A', '未知') AND 实际金额 >= 0  AND `实际金额` NOT IN ('实际金额') AND `差异金额` NOT IN ('差异金额') AND `审批状态` NOT IN ('N/A') GROUP BY 部门 ORDER BY SUM(差异金额) DE
+2026-05-30 21:30:47,887 - agent - INFO - agent_tools.py:144 - [execute_sql] 执行SQL返回 1 行
+2026-05-30 21:30:47,887 - agent - INFO - middleware.py:26 - [tool monitor] 工具 execute_sql 调用成功
+2026-05-30 21:30:47,889 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。

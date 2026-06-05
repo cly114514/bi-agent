@@ -1,0 +1,36 @@
+2026-06-04 17:05:57,817 - agent - INFO - mysql_handler.py:121 - [MySQL] 已连接 127.0.0.1:3306/biagent
+2026-06-04 17:06:21,252 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 1 条消息。
+2026-06-04 17:06:25,027 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-06-04 17:06:25,027 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-06-04 17:06:25,028 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-06-04 17:06:25,029 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-06-04 17:06:57,278 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 3 条消息。
+2026-06-04 17:07:00,917 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-06-04 17:07:00,918 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-06-04 17:07:00,919 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-06-04 17:07:00,920 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 5 条消息。
+2026-06-04 17:07:04,892 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-06-04 17:07:04,892 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '查询所有北方地区（北京、沈阳、西安）手机的销售额，即产品名称为手机且城市在（北京,沈阳,西安）的总金额汇总'}
+2026-06-04 17:07:16,085 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-06-04 17:07:16,086 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 7 条消息。
+2026-06-04 17:07:20,779 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: execute_sql
+2026-06-04 17:07:20,779 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'sql': "SELECT SUM(总金额) AS 销售额 FROM `Sheet1` WHERE 产品名称 = '手机' AND 城市 IN ('北京', '沈阳', '西安')"}
+2026-06-04 17:07:20,781 - agent - INFO - agent_tools.py:111 - [execute_sql] 脏数据过滤: 无
+2026-06-04 17:07:20,839 - agent - INFO - agent_tools.py:140 - [execute_sql] 执行SQL返回 1 行
+2026-06-04 17:07:20,839 - agent - INFO - middleware.py:26 - [tool monitor] 工具 execute_sql 调用成功
+2026-06-04 17:07:20,841 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 9 条消息。
+2026-06-04 17:07:51,185 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 4 条消息。
+2026-06-04 17:07:53,035 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: get_table_schema
+2026-06-04 17:07:53,036 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {}
+2026-06-04 17:07:53,036 - agent - INFO - middleware.py:26 - [tool monitor] 工具 get_table_schema 调用成功
+2026-06-04 17:07:53,038 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 6 条消息。
+2026-06-04 17:07:56,305 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: generate_sql
+2026-06-04 17:07:56,305 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'query': '统计北方地区（北京、沈阳、西安）手机的销售额，按城市分别展示，对总金额求和'}
+2026-06-04 17:08:05,203 - agent - INFO - middleware.py:26 - [tool monitor] 工具 generate_sql 调用成功
+2026-06-04 17:08:05,205 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 8 条消息。
+2026-06-04 17:08:08,336 - agent - INFO - middleware.py:22 - [tool monitor] 执行工具: execute_sql
+2026-06-04 17:08:08,336 - agent - INFO - middleware.py:23 - [tool monitor] 传入参数: {'sql': "SELECT 城市, SUM(总金额) AS 销售额 FROM Sheet1 WHERE 产品名称 = '手机' AND 城市 IN ('北京', '沈阳', '西安') GROUP BY 城市"}
+2026-06-04 17:08:08,337 - agent - INFO - agent_tools.py:111 - [execute_sql] 脏数据过滤: 无
+2026-06-04 17:08:08,401 - agent - INFO - agent_tools.py:140 - [execute_sql] 执行SQL返回 3 行
+2026-06-04 17:08:08,402 - agent - INFO - middleware.py:26 - [tool monitor] 工具 execute_sql 调用成功
+2026-06-04 17:08:08,403 - agent - INFO - middleware.py:38 - [log_before_model] 即将调用模型，带有 10 条消息。

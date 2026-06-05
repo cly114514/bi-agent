@@ -4,6 +4,5 @@ mysql:
   host: 127.0.0.1
   port: 3306
   user: root
-  # input your mysql root password here
-  password: "xxxxxxxx"
+  password: "Lztxdy666!"
   database: biagent
